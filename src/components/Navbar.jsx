@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../providers/AuthContext';
 import { Link, NavLink } from 'react-router';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
     const [theme, setTheme] = useState('light');
@@ -20,6 +21,20 @@ const Navbar = () => {
         localStorage.setItem('theme', newTheme);
         setTheme(newTheme);
     };
+
+    const logOutUser = () => {
+        logOut()
+            .then(() => {
+                Swal.fire({
+                    title: "Log Out Successful",
+                    icon: "success",
+                    draggable: true
+                });
+            }).catch((error) => {
+                console.log(error);
+
+            });
+    }
 
     const toggleThemeBtn = <>
         <label onClick={toggleTheme} className="flex cursor-pointer gap-2">
@@ -66,7 +81,7 @@ const Navbar = () => {
                         {user ? (
                             <>
                                 <NavLink to="/dashboard">Dashboard</NavLink>
-                                <button onClick={() => logOut}>Logout</button>
+                                <span><button className='btn btn-primary' onClick={logOutUser}>Logout</button></span>
                             </>
                         ) : (
                             <>
@@ -109,13 +124,13 @@ const Navbar = () => {
                                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                             </svg>
                         </label> */}
-                        {user? <div className="avatar">
+                        {user ? <div className="avatar">
                             <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring-2 ring-offset-2">
                                 <Link to='/profile'>
                                     <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
                                 </Link>
                             </div>
-                        </div>:<div/>}
+                        </div> : <div />}
 
                         {/* Mobile Menu Button (non-functional for now) */}
                         <div className="dropdown dropdown-end">
@@ -141,7 +156,7 @@ const Navbar = () => {
                                 {user ? (
                                     <>
                                         <span><NavLink to="/dashboard">Dashboard</NavLink></span>
-                                        <span><button onClick={() => logOut}>Logout</button></span>
+                                        <span><button className='btn btn-primary' onClick={logOutUser}>Logout</button></span>
                                     </>
                                 ) : (
                                     <>
@@ -149,7 +164,7 @@ const Navbar = () => {
                                         <span><NavLink to="/register">Register</NavLink></span>
                                     </>
                                 )}
-                                
+
                             </ul>
                         </div>
 

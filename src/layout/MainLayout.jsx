@@ -9,7 +9,7 @@ const MainLayout = () => {
             <div className='mx-auto text-center'>
                 <Navbar></Navbar>
             </div>
-            <div className='flex justify-center items-center h-screen mx-auto'>
+            <div className='flex justify-center items-center min-h-screen mx-auto py-10'>
                 <Outlet></Outlet>
             </div>
             <div className='mx-auto text-center'>
