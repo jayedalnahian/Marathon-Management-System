@@ -32,7 +32,16 @@ const Register = () => {
                         title: "Registration Successful!",
                         text: "",
                         icon: "success",
-                        timer: 1500
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                        color: "#ffffff", // white text
+                        customClass: {
+                            popup: 'rounded-xl shadow-xl',
+                            title: 'text-2xl font-bold',
+                            icon: 'mt-3',
+                        },
                     });
                 }
 
@@ -43,14 +52,23 @@ const Register = () => {
                     title: "Registration Failed!",
                     text: "Try Again",
                     icon: "error",
-                    timer: 1500
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                    color: "#ffffff", // white text
+                    customClass: {
+                        popup: 'rounded-xl shadow-xl',
+                        title: 'text-2xl font-bold',
+                        icon: 'mt-3',
+                    },
                 });
 
             })
 
     }
     return (
-        <div className="w-full max-w-md p-4 rounded-md shadow sm:p-8 dark:bg-gray-50 dark:text-gray-800 border">
+        <div className="w-10/12 mx-auto max-w-md p-4 rounded-md shadow sm:p-8 dark:bg-gray-50 dark:text-gray-800 border">
             <h2 className="mb-3 text-3xl font-semibold text-center">Register</h2>
             <p className="text-sm text-center dark:text-gray-600">Already have an account?
                 <Link to='/login' href="#" rel="noopener noreferrer" className="focus:underline hover:underline">Login here</Link>

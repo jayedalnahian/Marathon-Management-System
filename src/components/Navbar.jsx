@@ -28,6 +28,16 @@ const Navbar = () => {
                 Swal.fire({
                     title: "Log Out Successful",
                     icon: "success",
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                    color: "#ffffff", // white text
+                    customClass: {
+                        popup: 'rounded-xl shadow-xl',
+                        title: 'text-2xl font-bold',
+                        icon: 'mt-3',
+                    },
                     draggable: true
                 });
             }).catch((error) => {

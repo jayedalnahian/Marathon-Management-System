@@ -1,9 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import AddMarathon from './AddMarathon';
+// import 'react-datepicker/dist/react-datepicker.css';
 
 const Dashboard = () => {
+    const [activeTab, setActiveTab] = useState('add');
     return (
-        <div>
-            <h1>this is dashboard</h1>
+        <div className='w-10/12 mx-auto'>
+            <div className='flex justify-center items-center'>
+                <div role="tablist" className="tabs tabs-lift">
+                    <button
+                        onClick={() => setActiveTab('add')}
+                        role="tab"
+                        className={`tab ${activeTab === 'add' ? 'tab-active' : ''}`}
+                    >
+                        Add Marathon
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('list')}
+                        role="tab"
+                        className={`tab ${activeTab === 'list' ? 'tab-active' : ''}`}
+                    >
+                        My Marathon List
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('apply')}
+                        role="tab"
+                        className={`tab ${activeTab === 'apply' ? 'tab-active' : ''}`}
+                    >
+                        My Apply List
+                    </button>
+                </div>
+            </div>
+
+            <div className="mt-4">
+                {activeTab === 'add' && <div><AddMarathon></AddMarathon></div>}
+                {activeTab === 'list' && <div>My Marathon List content here</div>}
+                {activeTab === 'apply' && <div>My Apply List content here</div>}
+            </div>
         </div>
     );
 };
