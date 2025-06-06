@@ -1,7 +1,26 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-.active{
-text-decoration: underline;
-font-weight: 700;
+.active {
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+
+.backgroundIMG1 {
+    background: url('https://i.ibb.co/6Rqvh1RV/marathon-image-3.webp');
+    background-position: center;
+    background-size: cover;
+}
+
+.backgroundIMG2 {
+    background: url('https://i.ibb.co/xtf3mVq2/marathon-image-2.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.backgroundIMG3 {
+    background: url('https://i.ibb.co/LhHX9Tks/marathon-image-1.webp');
+    background-position: center;
+    background-size: cover;
 }

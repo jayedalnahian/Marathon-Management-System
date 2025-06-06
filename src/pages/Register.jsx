@@ -3,6 +3,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router';
 import { AuthContext } from '../providers/AuthContext';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const Register = () => {
     const { registerUser } = useContext(AuthContext);
@@ -23,26 +24,53 @@ const Register = () => {
         const userData = {
             name, email, photo, password
         }
-        console.log(userData);
         registerUser(email, password)
             .then(res => {
-                console.log(res?.user)
+                
                 if (res?.user) {
-                    Swal.fire({
-                        title: "Registration Successful!",
-                        text: "",
-                        icon: "success",
-                        timer: 3000,
-                        timerProgressBar: true,
-                        showConfirmButton: false,
-                        background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
-                        color: "#ffffff", // white text
-                        customClass: {
-                            popup: 'rounded-xl shadow-xl',
-                            title: 'text-2xl font-bold',
-                            icon: 'mt-3',
-                        },
-                    });
+                    axios.post('http://localhost:3000/users', userData)
+                        .then(data => {
+                            if (data?.data?.insertedId) {
+                                Swal.fire({
+                                    title: "Registration Successful!",
+                                    text: "",
+                                    icon: "success",
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                                    color: "#ffffff", // white text
+                                    customClass: {
+                                        popup: 'rounded-xl shadow-xl',
+                                        title: 'text-2xl font-bold',
+                                        icon: 'mt-3',
+                                    },
+                                });
+                                e.target.reset()
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            Swal.fire({
+                                title: "Registration Failed!",
+                                text: "Try Again",
+                                icon: "error",
+                                timer: 3000,
+                                timerProgressBar: true,
+                                showConfirmButton: false,
+                                background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                                color: "#ffffff", // white text
+                                customClass: {
+                                    popup: 'rounded-xl shadow-xl',
+                                    title: 'text-2xl font-bold',
+                                    icon: 'mt-3',
+                                },
+                            });
+
+
+
+                        })
+
                 }
 
             })

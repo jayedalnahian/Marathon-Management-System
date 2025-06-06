@@ -18,10 +18,6 @@ const Login = () => {
         e.preventDefault();
         const email = e?.target?.email?.value;
         const password = e?.target?.password?.value;
-        const userData = {
-            email, password
-        }
-        console.log(userData);
         loginUser(email, password)
             .then((userCredential) => {
                 const user = userCredential?.user;
