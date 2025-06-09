@@ -9,6 +9,7 @@ import PrivateRoute from "../routes/PrivateRoute";
 import Marathons from "../pages/Marathons";
 import Profile from "../pages/Profile";
 import Description from "../pages/Description";
+import UpdateMarathon from "../pages/UpdateMarathon";
 
 const router = createBrowserRouter([
     {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
             {
                 path: "/description",
                 element: <Description></Description>
+            },
+            {
+                path: "/updateMarathon/:id",
+                element: <UpdateMarathon></UpdateMarathon>
             },
         ]
     },

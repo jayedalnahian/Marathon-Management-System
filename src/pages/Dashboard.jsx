@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AddMarathon from './AddMarathon';
+import MyMarathonList from './MyMarathonList';
 // import 'react-datepicker/dist/react-datepicker.css';
 
 const Dashboard = () => {
@@ -34,7 +35,7 @@ const Dashboard = () => {
 
             <div className="mt-4">
                 {activeTab === 'add' && <div><AddMarathon></AddMarathon></div>}
-                {activeTab === 'list' && <div>My Marathon List content here</div>}
+                {activeTab === 'list' && <div><MyMarathonList></MyMarathonList></div>}
                 {activeTab === 'apply' && <div>My Apply List content here</div>}
             </div>
         </div>
