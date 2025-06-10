@@ -40,7 +40,7 @@ const AddMarathon = () => {
 
         axios.post("http://localhost:3000/marathons", data)
             .then(data => {
-                console.log(data?.data)
+                
                 if (data?.data?.insertedId) {
                     Swal.fire({
                         title: "🎉 Marathon Posted!",

@@ -15,7 +15,8 @@ const HeroSlider = () => {
         <div className="my-8 w-10/12 space-x-2 mx-auto">
             <Slider {...settings}>
                 <div className="p-2">
-                    <div className="h-100 rounded-2xl bg-blend-multiply backgroundIMG1 bg-blue-500 text-white flex items-center justify-center">
+                    <div className="h-100 rounded-2xl bg-blend-multiply backgroundIMG1  text-white flex items-center justify-center">
+
                         <h2 className="text-3xl font-bold bg-gray-50/60 rounded-2xl text-black p-2"> <Typewriter
                             words={["🏃 Join the Dhaka City Marathon 2025!", '🔥 Register Now and Be a Champion', '🎉 Exciting Prizes for Top Finishers!']}
                             loop={1000}

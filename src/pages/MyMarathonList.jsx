@@ -3,30 +3,70 @@ import { AuthContext } from '../providers/AuthContext';
 import { GrUpdate } from "react-icons/gr";
 import axios from 'axios';
 import { MdDelete } from "react-icons/md";
-import { Link} from 'react-router';
+import { Link } from 'react-router';
 import Loading from './Loading';
+import Swal from 'sweetalert2';
 
 const MyMarathonList = () => {
 
-    const { user, loading, setLoading} = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
     const [userData, setUserData] = useState([]);
-    
+
+
+    const handleDelete = (id) => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.delete(`http://localhost:3000/marathon/${id}`)
+                .then(res => {
+                    if (res.data.deletedCount === 1) {
+                        // Remove deleted item from UI
+                        setUserData(prevData => prevData.filter(item => item._id !== id));
+
+                        Swal.fire(
+                            'Deleted!',
+                            'The marathon has been deleted.',
+                            'success'
+                        );
+                    } else {
+                        Swal.fire('Error', 'Could not delete the marathon.', 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    Swal.fire('Error', 'Something went wrong!', 'error');
+                });
+        }
+    });
+};
+
 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`http://localhost:3000/created-by/${user.email}`);
-                console.log("Fetched data:", res.data);
+               
                 setUserData(res.data);
-                setLoading(false)
             } catch (err) {
                 console.error("Error fetching data:", err);
             }
         };
 
         fetchData();
-    }, [user.email]);
+    }, [user.email, setUserData]);
+
+
+
+
+
     const formatDate = (dateString) => {
         if (!dateString) return "N/A";
 
@@ -38,8 +78,11 @@ const MyMarathonList = () => {
         };
     };
 
-    if(loading){
-        return(
+
+
+
+    if (loading) {
+        return (
             <Loading></Loading>
         )
     }
@@ -83,7 +126,7 @@ const MyMarathonList = () => {
                                         <button className='btn btn-primary' title='Update'>
                                             <Link to={`http://localhost:5173/updateMarathon/${marathon._id}`}><GrUpdate size={15} /></Link>
                                         </button>
-                                        <button className='btn btn-error' title='Delete'>
+                                        <button onClick={() => handleDelete(marathon._id)} className='btn btn-error' title='Delete'>
                                             <MdDelete size={20} />
                                         </button>
                                     </td>

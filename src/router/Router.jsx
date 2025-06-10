@@ -10,6 +10,7 @@ import Marathons from "../pages/Marathons";
 import Profile from "../pages/Profile";
 import Description from "../pages/Description";
 import UpdateMarathon from "../pages/UpdateMarathon";
+import DetailsPage from "../pages/DetailsPage";
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
                 path: "/register",
                 element: <Register></Register>
             },
+            
             {
                 path: "/dashboard",
                 element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
@@ -43,11 +45,17 @@ const router = createBrowserRouter([
             },
             {
                 path: "/description",
-                element: <Description></Description>
+                element: <PrivateRoute><Description></Description></PrivateRoute>
+            },
+            {
+                path: '/details/:id',
+                loader: ({params})=> fetch(`http://localhost:3000/marathon/${params.id}`),
+                element: <PrivateRoute><DetailsPage></DetailsPage></PrivateRoute>
             },
             {
                 path: "/updateMarathon/:id",
-                element: <UpdateMarathon></UpdateMarathon>
+                loader: ({ params }) => fetch(`http://localhost:3000/marathon/${params.id}`),
+                element: <PrivateRoute><UpdateMarathon></UpdateMarathon></PrivateRoute>
             },
         ]
     },

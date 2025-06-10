@@ -21,7 +21,7 @@ const Login = () => {
         loginUser(email, password)
             .then((userCredential) => {
                 const user = userCredential?.user;
-                console.log(user);
+                
                 if (user.accessToken) {
                     Swal.fire({
                         title: "Login Successful!",
@@ -71,7 +71,7 @@ const Login = () => {
     const handleGoogleLogin = () => {
         googleLogin()
             .then(res => {
-                console.log(res.user)
+               
                 if (res.user.accessToken) {
                     Swal.fire({
                         title: "Login Successful!",
