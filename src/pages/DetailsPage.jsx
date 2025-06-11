@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { FaCalendarAlt, FaFlagCheckered, FaMapMarkerAlt, FaRegCalendarAlt, FaUser } from 'react-icons/fa';
 import { MdOutlineDateRange } from 'react-icons/md';
-import { useLoaderData } from 'react-router';
+import { Link, useLoaderData } from 'react-router';
 import { AiFillLike } from "react-icons/ai";
 import { VscGitStashApply } from "react-icons/vsc";
 import { AuthContext } from '../providers/AuthContext';
-import axios from 'axios';
+
 
 
 const DetailsPage = () => {
@@ -27,32 +27,38 @@ const DetailsPage = () => {
         createdBy
     } = marathonData;
 
-    const isRegistered = marathonData.totalRegistrationCount.includes(user?.email);
+    const isRegistered = totalRegistrationCount.some(item => item.email === user?.email);
 
 
-    const handleApply = async () => {
-        try {
-            const response = await axios.patch(`http://localhost:3000/marathonApply/${_id}`, {
-                $addToSet: { totalRegistrationCount: user.email }
-            });
 
-            if (response.data.modifiedCount) {
-                alert('Successfully registered for the marathon!');
-                window.location.reload();
-            }
-            else {
-                alert('You are already registered.');
-            }
+    // const handleApply = async () => {
+    //     try {
+    //         const response = await axios.patch(`http://localhost:3000/marathonApply/${_id}`, {
+    //             $addToSet: { totalRegistrationCount: user.email }
+    //         });
+
+    //         if (response.data.modifiedCount) {
+    //             alert('Successfully registered for the marathon!');
+    //             window.location.reload();
+    //         }
+    //         else {
+    //             alert('You are already registered.');
+    //         }
 
 
-        } catch (error) {
-            console.error('Error registering for marathon:', error);
-            alert('Failed to register for the marathon.');
-        }
-    };
+    //     } catch (error) {
+    //         console.error('Error registering for marathon:', error);
+    //         alert('Failed to register for the marathon.');
+    //     }
+    // };
     const handleLike = () => {
 
     }
+    const today = new Date();
+    const startDate = new Date(startRegistrationDate);
+    const endDate = new Date(endRegistrationDate);
+
+    const isRegistrationOpen = today >= startDate && today <= endDate;
 
     return (
         <section className="max-w-5xl mx-auto px-4 py-10">
@@ -108,7 +114,7 @@ const DetailsPage = () => {
                     </p>
 
                     <div className='space-x-4'>
-                        <button onClick={handleApply} className='btn btn-primary' disabled={isRegistered}><VscGitStashApply /></button>
+                        <Link to={`/marathonRegister/${_id}`} className='btn btn-primary' disabled={isRegistered || !isRegistrationOpen}><VscGitStashApply /></Link>
                         <button onClick={handleLike} className='btn btn-accent'><AiFillLike /></button>
                     </div>
                 </div>

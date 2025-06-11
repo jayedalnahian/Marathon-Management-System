@@ -40,7 +40,7 @@ const AddMarathon = () => {
 
         axios.post("http://localhost:3000/marathons", data)
             .then(data => {
-                
+
                 if (data?.data?.insertedId) {
                     Swal.fire({
                         title: "🎉 Marathon Posted!",
@@ -94,7 +94,7 @@ const AddMarathon = () => {
                         { name: 'endRegistrationDate', id: "End Registration Date", type: "date", className: "input", label: "End Registration Date", col: 2 },
                         { name: 'marathonStartDate', id: "Marathon Start Date", type: "date", className: "input", label: "Marathon Start Date", col: 2 },
                         { name: 'location', id: "Location", label: "Location", className: "", type: "text", col: 3 },
-                        { name: 'runningDistance', id: "Running Distance", className: "", label: "Running Distance", type: "text", col: 3 },
+                        // { name: 'runningDistance', id: "Running Distance", className: "", label: "Running Distance", type: "text", col: 3 },
                         { name: 'marathonImageURL', id: "Marathon Image URL", className: "", label: "Marathon Image URL", type: "text", col: 6 },
                     ].map(({ id, label, type, col, name, className }) => (
                         <div key={id} className={`col-span-full sm:col-span-${col}`}>
@@ -102,6 +102,13 @@ const AddMarathon = () => {
                             <input required type={type} name={name} placeholder="Type here" className={`${className} input w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:ring focus:ring-violet-400 focus:outline-none`} />
                         </div>
                     ))}
+                    <select name="runningDistance" className="col-span-6 input w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:ring hover:ring-violet-400 focus:outline-none" required>
+                        <option value="" className=''>Select Running Distance</option>
+                        <option value="3KM">3 KM</option>
+                        <option value="10 KM">10 KM</option>
+                        <option value="25 KM">25 KM</option>
+                        
+                    </select>
                     <fieldset className="fieldset col-span-6 ">
                         <label className="text-sm">Description</label>
                         <textarea name='description' className="textarea input w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:ring focus:ring-violet-400 focus:outline-none" placeholder="Description"></textarea>
