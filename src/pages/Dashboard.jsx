@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AddMarathon from './AddMarathon';
 import MyMarathonList from './MyMarathonList';
+import MyAppliedMarathons from './MyAppliedMarathons';
 // import 'react-datepicker/dist/react-datepicker.css';
 
 const Dashboard = () => {
@@ -28,7 +29,7 @@ const Dashboard = () => {
                         role="tab"
                         className={`tab ${activeTab === 'apply' ? 'tab-active' : ''}`}
                     >
-                        My Apply List
+                        My Applied Marathons
                     </button>
                 </div>
             </div>
@@ -36,7 +37,7 @@ const Dashboard = () => {
             <div className="mt-4">
                 {activeTab === 'add' && <div><AddMarathon></AddMarathon></div>}
                 {activeTab === 'list' && <div><MyMarathonList></MyMarathonList></div>}
-                {activeTab === 'apply' && <div>My Apply List content here</div>}
+                {activeTab === 'apply' && <div><MyAppliedMarathons></MyAppliedMarathons></div>}
             </div>
         </div>
     );

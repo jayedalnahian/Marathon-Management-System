@@ -1,74 +1,30 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../providers/AuthContext';
-import { GrUpdate } from "react-icons/gr";
 import axios from 'axios';
-import { MdDelete } from "react-icons/md";
-import { Link } from 'react-router';
+import { AuthContext } from '../providers/AuthContext';
 import Loading from './Loading';
-import Swal from 'sweetalert2';
+import { Link } from 'react-router';
 
-const MyMarathonList = () => {
-
-    const { user } = useContext(AuthContext);
-    const [userData, setUserData] = useState([]);
+const MyAppliedMarathons = () => {
+    const [marathons, setMarathons] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    const handleDelete = (id) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios.delete(`http://localhost:3000/marathon/${id}`)
-                    .then(res => {
-                        if (res.data.deletedCount === 1) {
-                            // Remove deleted item from UI
-                            setUserData(prevData => prevData.filter(item => item._id !== id));
-
-                            Swal.fire(
-                                'Deleted!',
-                                'The marathon has been deleted.',
-                                'success'
-                            );
-                        } else {
-                            Swal.fire('Error', 'Could not delete the marathon.', 'error');
-                        }
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        Swal.fire('Error', 'Something went wrong!', 'error');
-                    });
-            }
-        });
-    };
-
-
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         if (!user.email) return;
-        const fetchData = async () => {
-            try {
-                const res = await axios.get(`http://localhost:3000/created-by/${user.email}`);
 
-                setUserData(res.data);
-            } catch (err) {
-                console.error("Error fetching data:", err);
-            } finally{
-                setLoading(false)
+        const fetchMarathons = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/my-applied-marathons/${user.email}`);
+                setMarathons(response.data);
+            } catch (error) {
+                console.error('Error fetching marathons:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchData();
-    }, [user.email, setUserData]);
-
-
-
-
+        fetchMarathons();
+    }, [user.email]);
 
     const formatDate = (dateString) => {
         if (!dateString) return "N/A";
@@ -80,8 +36,6 @@ const MyMarathonList = () => {
             dayName: date.toLocaleDateString(undefined, { weekday: 'long' })
         };
     };
-
-
 
 
     if (loading) {
@@ -106,12 +60,13 @@ const MyMarathonList = () => {
                             <th className="p-3">No.</th>
                             <th className="p-3">Title</th>
                             <th className="p-3">Location</th>
+
                             <th className="p-3">Marathon Start Date</th>
                             <th className="p-3">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {userData.map((marathon, index) => {
+                        {marathons.map((marathon, index) => {
                             const { formattedDate } = formatDate(marathon.marathonStartDate);
 
                             return (
@@ -129,14 +84,9 @@ const MyMarathonList = () => {
                                         <p>{formattedDate}</p>
 
                                     </td>
-                                    <td className="p-3 flex flex-col md:flex-row justify-center items-center gap-2 ">
+                                    <td className="p-3 flex flex-col md:flex-row justify-center items-center gap-5 ">
                                         <button className='btn btn-sm btn-active'><Link to={`/details/${marathon._id}`}>Details</Link></button>
-                                        <button className='btn btn-sm btn-primary' title='Update'>
-                                            <Link className='' to={`http://localhost:5173/updateMarathon/${marathon._id}`}>Update</Link>
-                                        </button>
-                                        <button onClick={() => handleDelete(marathon._id)} className='btn btn-sm btn-error' title='Delete'>
-                                            <MdDelete size={20} />
-                                        </button>
+
                                     </td>
                                 </tr>
                             );
@@ -148,4 +98,4 @@ const MyMarathonList = () => {
     );
 };
 
-export default MyMarathonList;
+export default MyAppliedMarathons;

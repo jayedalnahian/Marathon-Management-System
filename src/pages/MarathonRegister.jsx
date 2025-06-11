@@ -22,19 +22,24 @@ const MarathonRegister = () => {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
         try {
+            let priRegistration = JSON.parse(localStorage.getItem("myRegisteredMarathons")) || [];
+
+            if (!priRegistration.includes(_id)) {
+                priRegistration.push(_id);
+                localStorage.setItem("myRegisteredMarathons", JSON.stringify(priRegistration));
+            }
+
             const response = await axios.patch(`http://localhost:3000/marathonApply/${_id}`, {
                 $addToSet: { totalRegistrationCount: data }
             });
 
             if (response.data.modifiedCount) {
                 alert('Successfully registered for the marathon!');
-            }
-            else {
+            } else {
                 alert('You are already registered.');
             }
-
-
-        } catch (error) {
+        }
+        catch (error) {
             console.error('Error registering for marathon:', error);
             alert('Failed to register for the marathon.');
         }
