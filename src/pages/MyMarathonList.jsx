@@ -61,6 +61,22 @@ const MyMarathonList = () => {
                 setUserData(res.data);
             } catch (err) {
                 console.error("Error fetching data:", err);
+                Swal.fire({
+                    title: "Unexpected Error!",
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                    color: "#ffffff", // white text
+                    customClass: {
+                        popup: 'rounded-xl shadow-xl',
+                        title: 'text-2xl font-bold',
+                        icon: 'mt-3',
+                    },
+                    icon: "error",
+
+                });
+
             } finally {
                 setLoading(false)
             }
@@ -112,15 +128,38 @@ const MyMarathonList = () => {
         }
 
 
+        try {
+            axios.patch(`http://localhost:3000/marathon/${id}`, data)
+                .then(res => {
+                    console.log(res)
+                    Swal.fire({
+                        title: "🎉 Marathon Updated!",
+                        text: "Your marathon has been successfully updated.",
+                        icon: "success",
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                        color: "#ffffff", // white text
+                        customClass: {
+                            popup: 'rounded-xl shadow-xl',
+                            title: 'text-2xl font-bold',
+                            icon: 'mt-3',
+                        },
+                    });
+                    setUserData(prev =>
+                        prev.map(marathon =>
+                            marathon._id === id ? { ...marathon, ...data } : marathon
+                        )
+                    );
+                    setShowModal(false);
+                })
 
-
-        axios.patch(`http://localhost:3000/marathon/${id}`, data)
-            .then(res => {
-                console.log(res)
-                Swal.fire({
-                    title: "🎉 Marathon Updated!",
-                    text: "Your marathon has been successfully updated.",
-                    icon: "success",
+        }
+        catch (error) {
+            console.log(error);
+            Swal.fire({
+                    title: "Unexpected Error!",
                     timer: 3000,
                     timerProgressBar: true,
                     showConfirmButton: false,
@@ -131,15 +170,12 @@ const MyMarathonList = () => {
                         title: 'text-2xl font-bold',
                         icon: 'mt-3',
                     },
+                    icon: "error",
+
                 });
-                setUserData(prev =>
-                    prev.map(marathon =>
-                        marathon._id === id ? { ...marathon, ...data } : marathon
-                    )
-                );
-                setShowModal(false);
-            })
-            .catch(err => console.error(err));
+        }
+
+
     }
 
 

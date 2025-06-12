@@ -26,50 +26,52 @@ const Register = () => {
         }
         registerUser(email, password)
             .then(res => {
-                
+
                 if (res?.user) {
-                    axios.post('http://localhost:3000/users', userData)
-                        .then(data => {
-                            if (data?.data?.insertedId) {
-                                Swal.fire({
-                                    title: "Registration Successful!",
-                                    text: "",
-                                    icon: "success",
-                                    timer: 3000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
-                                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
-                                    color: "#ffffff", // white text
-                                    customClass: {
-                                        popup: 'rounded-xl shadow-xl',
-                                        title: 'text-2xl font-bold',
-                                        icon: 'mt-3',
-                                    },
-                                });
-                                e.target.reset()
-                            }
-                        })
-                        .catch(error => {
-                            console.log(error)
-                            Swal.fire({
-                                title: "Registration Failed!",
-                                text: "Try Again",
-                                icon: "error",
-                                timer: 3000,
-                                timerProgressBar: true,
-                                showConfirmButton: false,
-                                background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
-                                color: "#ffffff", // white text
-                                customClass: {
-                                    popup: 'rounded-xl shadow-xl',
-                                    title: 'text-2xl font-bold',
-                                    icon: 'mt-3',
-                                },
-                            });
 
 
+                    try {
+                        axios.post('http://localhost:3000/users', userData)
+                            .then(data => {
+                                if (data?.data?.insertedId) {
+                                    Swal.fire({
+                                        title: "Registration Successful!",
+                                        text: "",
+                                        icon: "success",
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        showConfirmButton: false,
+                                        background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                                        color: "#ffffff", // white text
+                                        customClass: {
+                                            popup: 'rounded-xl shadow-xl',
+                                            title: 'text-2xl font-bold',
+                                            icon: 'mt-3',
+                                        },
+                                    });
+                                    e.target.reset()
+                                }
+                            })
+                    } catch (error) {
+                        console.log(error)
+                        Swal.fire({
+                            title: "Registration Failed!",
+                            text: "Try Again",
+                            icon: "error",
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                            background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                            color: "#ffffff", // white text
+                            customClass: {
+                                popup: 'rounded-xl shadow-xl',
+                                title: 'text-2xl font-bold',
+                                icon: 'mt-3',
+                            },
+                        });
+                    }
 
-                        })
+
 
                 }
 

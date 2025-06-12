@@ -38,50 +38,51 @@ const AddMarathon = () => {
 
 
 
-        axios.post("http://localhost:3000/marathons", data)
-            .then(data => {
+        try {
+            axios.post("http://localhost:3000/marathons", data)
+                .then(data => {
 
-                if (data?.data?.insertedId) {
-                    Swal.fire({
-                        title: "🎉 Marathon Posted!",
-                        text: "Your marathon has been successfully added.",
-                        icon: "success",
-                        timer: 3000,
-                        timerProgressBar: true,
-                        showConfirmButton: false,
-                        background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
-                        color: "#ffffff", // white text
-                        customClass: {
-                            popup: 'rounded-xl shadow-xl',
-                            title: 'text-2xl font-bold',
-                            icon: 'mt-3',
-                        },
-                    });
-
-
-                }
-            })
-            .catch(error => {
-                console.log(error)
-                Swal.fire({
-                    title: "Sorry, something went wrong",
-                    text: "Your marathon has not been  added.",
-                    icon: "error",
-                    timer: 3000,
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
-                    color: "#ffffff", // white text
-                    customClass: {
-                        popup: 'rounded-xl shadow-xl',
-                        title: 'text-2xl font-bold',
-                        icon: 'mt-3',
-                    },
-                });
+                    if (data?.data?.insertedId) {
+                        Swal.fire({
+                            title: "🎉 Marathon Posted!",
+                            text: "Your marathon has been successfully added.",
+                            icon: "success",
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                            background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                            color: "#ffffff", // white text
+                            customClass: {
+                                popup: 'rounded-xl shadow-xl',
+                                title: 'text-2xl font-bold',
+                                icon: 'mt-3',
+                            },
+                        });
 
 
+                    }
+                })
+        } catch (error) {
+            console.log(error)
+            Swal.fire({
+                title: "Sorry, something went wrong",
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                color: "#ffffff", // white text
+                customClass: {
+                    popup: 'rounded-xl shadow-xl',
+                    title: 'text-2xl font-bold',
+                    icon: 'mt-3',
+                },
+                icon: "error",
 
-            })
+            });
+        }
+
+
+
 
     }
     return (
@@ -107,7 +108,7 @@ const AddMarathon = () => {
                         <option value="3KM">3 KM</option>
                         <option value="10 KM">10 KM</option>
                         <option value="25 KM">25 KM</option>
-                        
+
                     </select>
                     <fieldset className="fieldset col-span-6 ">
                         <label className="text-sm">Description</label>

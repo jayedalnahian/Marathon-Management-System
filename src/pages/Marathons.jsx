@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import MarathonCard from '../components/home/MarathonCard';
 import Loading from './Loading';
+import Swal from 'sweetalert2';
 
 
 const Marathons = () => {
@@ -16,6 +17,21 @@ const Marathons = () => {
             }
             catch (err) {
                 console.error("Failed to fetch marathons:", err);
+                Swal.fire({
+                    title: "Unexpected Error!",
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                    color: "#ffffff", // white text
+                    customClass: {
+                        popup: 'rounded-xl shadow-xl',
+                        title: 'text-2xl font-bold',
+                        icon: 'mt-3',
+                    },
+                    icon: "error",
+
+                });
             }
             finally {
                 setLoading(false)

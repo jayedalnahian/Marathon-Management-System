@@ -4,6 +4,7 @@ import { AuthContext } from '../providers/AuthContext';
 import Loading from './Loading';
 import { Link } from 'react-router';
 import { MdDelete } from 'react-icons/md';
+import Swal from 'sweetalert2';
 
 const MyAppliedMarathons = () => {
     const [marathons, setMarathons] = useState([]);
@@ -21,6 +22,21 @@ const MyAppliedMarathons = () => {
                 setMarathons(response.data);
             } catch (error) {
                 console.error('Error fetching marathons:', error);
+                Swal.fire({
+                    title: "Unexpected Error!",
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                    color: "#ffffff", // white text
+                    customClass: {
+                        popup: 'rounded-xl shadow-xl',
+                        title: 'text-2xl font-bold',
+                        icon: 'mt-3',
+                    },
+                    icon: "error",
+
+                });
             } finally {
                 setLoading(false);
             }
@@ -92,11 +108,41 @@ const MyAppliedMarathons = () => {
 
                 setMarathons(updatedMarathons);
                 setShowModal(false);
-                alert('Registration updated successfully!');
+
+                Swal.fire({
+                    title: "Registration updated successfully!",
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                    color: "#ffffff", // white text
+                    customClass: {
+                        popup: 'rounded-xl shadow-xl',
+                        title: 'text-2xl font-bold',
+                        icon: 'mt-3',
+                    },
+                    icon: "success",
+
+                });
             }
         } catch (error) {
             console.error('Error updating registration:', error);
-            alert('Failed to update registration');
+           
+            Swal.fire({
+                title: "Failed to update registration",
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                color: "#ffffff", // white text
+                customClass: {
+                    popup: 'rounded-xl shadow-xl',
+                    title: 'text-2xl font-bold',
+                    icon: 'mt-3',
+                },
+                icon: "error",
+
+            });
         }
     };
 

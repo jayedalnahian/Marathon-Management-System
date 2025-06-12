@@ -30,30 +30,7 @@ const DetailsPage = () => {
     const isRegistered = totalRegistrationCount.some(item => item.email === user?.email);
 
 
-
-    // const handleApply = async () => {
-    //     try {
-    //         const response = await axios.patch(`http://localhost:3000/marathonApply/${_id}`, {
-    //             $addToSet: { totalRegistrationCount: user.email }
-    //         });
-
-    //         if (response.data.modifiedCount) {
-    //             alert('Successfully registered for the marathon!');
-    //             window.location.reload();
-    //         }
-    //         else {
-    //             alert('You are already registered.');
-    //         }
-
-
-    //     } catch (error) {
-    //         console.error('Error registering for marathon:', error);
-    //         alert('Failed to register for the marathon.');
-    //     }
-    // };
-    const handleLike = () => {
-
-    }
+   
     const today = new Date();
     const startDate = new Date(startRegistrationDate);
     const endDate = new Date(endRegistrationDate);
@@ -115,7 +92,7 @@ const DetailsPage = () => {
 
                     <div className='space-x-4'>
                         <Link to={`/marathonRegister/${_id}`} className='btn btn-primary' disabled={isRegistered || !isRegistrationOpen}><VscGitStashApply /></Link>
-                        <button onClick={handleLike} className='btn btn-accent'><AiFillLike /></button>
+                        
                     </div>
                 </div>
             </div>

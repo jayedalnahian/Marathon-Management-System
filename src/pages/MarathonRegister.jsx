@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router';
 import { AuthContext } from '../providers/AuthContext';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const MarathonRegister = () => {
     const marathonData = useLoaderData();
@@ -34,14 +35,57 @@ const MarathonRegister = () => {
             });
 
             if (response.data.modifiedCount) {
-                alert('Successfully registered for the marathon!');
+                Swal.fire({
+                    title: "Successfully registered for the marathon!",
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                    color: "#ffffff", // white text
+                    customClass: {
+                        popup: 'rounded-xl shadow-xl',
+                        title: 'text-2xl font-bold',
+                        icon: 'mt-3',
+                    },
+                    icon: "success",
+
+                });
             } else {
-                alert('You are already registered.');
+              
+                Swal.fire({
+                    title: "You are already registered.",
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                    color: "#ffffff", // white text
+                    customClass: {
+                        popup: 'rounded-xl shadow-xl',
+                        title: 'text-2xl font-bold',
+                        icon: 'mt-3',
+                    },
+                    icon: "error",
+
+                });
             }
         }
         catch (error) {
             console.error('Error registering for marathon:', error);
-            alert('Failed to register for the marathon.');
+            Swal.fire({
+                    title: "Failed to register for the marathon.",
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                    color: "#ffffff", // white text
+                    customClass: {
+                        popup: 'rounded-xl shadow-xl',
+                        title: 'text-2xl font-bold',
+                        icon: 'mt-3',
+                    },
+                    icon: "error",
+
+                });
         }
     }
     return (
