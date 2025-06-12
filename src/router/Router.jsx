@@ -12,6 +12,7 @@ import Description from "../pages/Description";
 import UpdateMarathon from "../pages/UpdateMarathon";
 import DetailsPage from "../pages/DetailsPage";
 import MarathonRegister from "../pages/MarathonRegister";
+import Loading from "../pages/Loading";
 
 const router = createBrowserRouter([
     {
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
             
             {
                 path: "/dashboard",
-                element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+                element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
             },
             {
                 path: "/marathons",
@@ -46,21 +47,25 @@ const router = createBrowserRouter([
             },
             {
                 path: "/description",
-                element: <PrivateRoute><Description></Description></PrivateRoute>
+                element: <PrivateRoute><Description></Description></PrivateRoute>,
+                
             },
             {
                 path: '/details/:id',
                 loader: ({params})=> fetch(`http://localhost:3000/marathon/${params.id}`),
+                hydrateFallbackElement: <Loading></Loading>,
                 element: <PrivateRoute><DetailsPage></DetailsPage></PrivateRoute>
             },
             {
                 path: "/updateMarathon/:id",
                 loader: ({ params }) => fetch(`http://localhost:3000/marathon/${params.id}`),
+                hydrateFallbackElement: <Loading></Loading>,
                 element: <PrivateRoute><UpdateMarathon></UpdateMarathon></PrivateRoute>
             },
             {
                 path: "/marathonRegister/:id",
                 loader: ({ params }) => fetch(`http://localhost:3000/marathon/${params.id}`),
+                hydrateFallbackElement: <Loading></Loading>,
                 element: <PrivateRoute><MarathonRegister></MarathonRegister></PrivateRoute>
             },
         ]

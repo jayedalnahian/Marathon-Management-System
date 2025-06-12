@@ -1,16 +1,35 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import MarathonCard from '../components/home/MarathonCard';
+import Loading from './Loading';
 
 
 const Marathons = () => {
     const [marathons, setMarathons] = useState([])
-
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
-        axios.get('http://localhost:3000/marathons').then(res => setMarathons(res.data)).catch(err => console.log(err));
-    }, [])
-   
+        const fetchMarathons = () => {
+            try {
+                axios.get('http://localhost:3000/marathons')
+                    .then(res => setMarathons(res.data))
 
+            }
+            catch (err) {
+                console.error("Failed to fetch marathons:", err);
+            }
+            finally {
+                setLoading(false)
+            }
+        }
+
+        fetchMarathons()
+    }, [])
+
+    if (loading) {
+        return (
+            <Loading></Loading>
+        )
+    }
     return (
 
         <div className='w-10/12 mx-auto bg-[url(https://i.ibb.co/S4PBtFcF/Bucharest-Marathon-scaled.jpg)] bg-cover px-10 rounded-2xl py-10'>

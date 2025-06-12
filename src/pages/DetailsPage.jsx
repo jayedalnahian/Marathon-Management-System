@@ -62,8 +62,8 @@ const DetailsPage = () => {
 
     return (
         <section className="max-w-5xl mx-auto px-4 py-10">
-            <div className="bg-white shadow-xl rounded-lg overflow-hidden md:flex">
-                {/* Left: Image */}
+            <div className="bg-white shadow-xl border border-gray-600/70 rounded-lg overflow-hidden md:flex">
+
                 <div className="md:w-1/2 h-64 md:h-auto">
                     <img
                         src={marathonImageURL}
@@ -71,11 +71,11 @@ const DetailsPage = () => {
                         className="object-cover w-full h-full"
                     />
                 </div>
-
-                {/* Right: Content */}
-                <div className="md:w-1/2 p-6 space-y-4">
-                    <h2 className="text-3xl font-bold text-blue-700">{title}</h2>
-                    <p className="text-gray-600">{description}</p>
+                <div className="md:w-1/2 p-6 space-y-4 flex justify-center items-center flex-col">
+                    <div>
+                        <h2 className="text-3xl font-bold text-blue-700">{title}</h2>
+                        <p className="text-gray-600">{description}</p>
+                    </div>
 
                     <div className="flex flex-col gap-3 text-sm">
                         <div className="flex items-center gap-2 text-gray-800">
