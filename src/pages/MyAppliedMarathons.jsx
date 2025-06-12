@@ -64,6 +64,79 @@ const MyAppliedMarathons = () => {
     }
 
 
+    const handleCancel = async (marathonId) => {
+        const confirm = await Swal.fire({
+            title: "Are you sure you want to cancel your registration?",
+            text: "This action cannot be undone!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, cancel it!",
+            cancelButtonText: "No, keep it",
+            background: "linear-gradient(135deg, #7f00ff, #00bfff)",
+            color: "#ffffff",
+            customClass: {
+                popup: 'rounded-xl shadow-xl',
+                title: 'text-2xl font-bold',
+            },
+        });
+
+        if (confirm.isConfirmed) {
+            try {
+                const res = await axios.patch(`http://localhost:3000/cancel-registration/${marathonId}`, {
+                    userId: user.uid,
+                });
+                console.log(res.data);
+                window.location.reload();
+
+                if (res.data.modifiedCount === 1) {
+
+                    // ekhane registered user er data delete kora hoyeche
+                    const updatedMarathons = marathons.map(marathon => {
+                        if (marathon._id === marathonId) {
+                            return {
+                                ...marathon,
+                                totalRegistrationCount: marathon.totalRegistrationCount.filter(reg => reg.userId !== user.uid)
+                            };
+                        }
+                        return marathon;
+                    }).filter(marathon => marathon.totalRegistrationCount.length > 0);
+
+                    setMarathons(updatedMarathons);
+
+                    Swal.fire({
+                        title: "Registration canceled successfully!",
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        icon: "success",
+                        background: "linear-gradient(135deg, #7f00ff, #00bfff)",
+                        color: "#ffffff",
+                        customClass: {
+                            popup: 'rounded-xl shadow-xl',
+                            title: 'text-2xl font-bold',
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error("Error canceling registration:", error);
+                Swal.fire({
+                    title: "Failed to cancel registration",
+                    icon: "error",
+                    timer: 3000,
+                    showConfirmButton: false,
+                    background: "linear-gradient(135deg, #7f00ff, #00bfff)",
+                    color: "#ffffff",
+                    customClass: {
+                        popup: 'rounded-xl shadow-xl',
+                        title: 'text-2xl font-bold',
+                    }
+                });
+            }
+        }
+    };
+
+
+
     const handleUpdate = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -127,7 +200,7 @@ const MyAppliedMarathons = () => {
             }
         } catch (error) {
             console.error('Error updating registration:', error);
-           
+
             Swal.fire({
                 title: "Failed to update registration",
                 timer: 3000,
@@ -202,7 +275,12 @@ const MyAppliedMarathons = () => {
                                             showModal && (
                                                 <div className="fixed inset-0 bg-[#80808080] z-50 flex justify-center items-center">
                                                     <section className="w-11/12 max-w-4xl max-h-screen overflow-y-auto bg-white p-5 text-gray-900 dark:bg-gray-900 dark:text-gray-100 rounded-lg shadow-lg">
-                                                        <button className='btn btn-primary' onClick={() => setShowModal(false)} >close Modal</button>
+                                                        <div className='flex justify-between items-center'>
+                                                            <div></div>
+                                                            <div></div>
+                                                            <button className=" text-white bg-red-500 hover:bg-red-600 px-3 py-1 rounded" onClick={() => setShowModal(false)}>✕</button>
+                                                        </div>
+                                                        
                                                         <div>
                                                             <h1 className="text-xl font-bold mb-6">Update Registration for: {marathon.title}</h1>
 
@@ -301,8 +379,9 @@ const MyAppliedMarathons = () => {
                                                 </div>
                                             )
                                         }
-                                        <button className='btn btn-error btn-sm' title='Cancel Registration'>Cancel</button>
+
                                         <button className='btn btn-sm btn-active'><Link to={`/details/${marathon._id}`}>Details</Link></button>
+                                        <button onClick={() => handleCancel(marathon._id)} className='btn btn-sm btn-error'>Cancel</button>
 
                                     </td>
                                 </tr>

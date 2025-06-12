@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useContext } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from 'react-router';
@@ -8,6 +8,9 @@ import Swal from 'sweetalert2';
 
 const Login = () => {
     const navigate = useNavigate();
+    useEffect(() => {
+        document.title = 'RUN | Login';
+    }, []);
 
     const {
         loginUser,
@@ -21,11 +24,11 @@ const Login = () => {
         loginUser(email, password)
             .then((userCredential) => {
                 const user = userCredential?.user;
-                
+
                 if (user.accessToken) {
                     Swal.fire({
                         title: "Login Successful!",
-                        timer:3000,
+                        timer: 3000,
                         timerProgressBar: true,
                         showConfirmButton: false,
                         background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
@@ -36,7 +39,7 @@ const Login = () => {
                             icon: 'mt-3',
                         },
                         icon: "success",
-                        
+
                     });
                 }
                 navigate("/")
@@ -52,14 +55,14 @@ const Login = () => {
                     icon: "error",
                     timer: 3000,
                     timerProgressBar: true,
-                        showConfirmButton: false,
-                        background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
-                        color: "#ffffff", // white text
-                        customClass: {
-                            popup: 'rounded-xl shadow-xl',
-                            title: 'text-2xl font-bold',
-                            icon: 'mt-3',
-                        },
+                    showConfirmButton: false,
+                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                    color: "#ffffff", // white text
+                    customClass: {
+                        popup: 'rounded-xl shadow-xl',
+                        title: 'text-2xl font-bold',
+                        icon: 'mt-3',
+                    },
 
                 });
                 e.target.reset();
@@ -71,14 +74,14 @@ const Login = () => {
     const handleGoogleLogin = () => {
         googleLogin()
             .then(res => {
-               
+
                 if (res.user.accessToken) {
                     Swal.fire({
                         title: "Login Successful!",
                         text: "",
                         icon: "success",
                         timer: 3000,
-                    timerProgressBar: true,
+                        timerProgressBar: true,
                         showConfirmButton: false,
                         background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
                         color: "#ffffff", // white text
@@ -88,6 +91,7 @@ const Login = () => {
                             icon: 'mt-3',
                         },
                     });
+                    navigate("/")
                 }
             })
             .catch(err => {
@@ -98,14 +102,14 @@ const Login = () => {
                     icon: "error",
                     timer: 3000,
                     timerProgressBar: true,
-                        showConfirmButton: false,
-                        background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
-                        color: "#ffffff", // white text
-                        customClass: {
-                            popup: 'rounded-xl shadow-xl',
-                            title: 'text-2xl font-bold',
-                            icon: 'mt-3',
-                        },
+                    showConfirmButton: false,
+                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                    color: "#ffffff", // white text
+                    customClass: {
+                        popup: 'rounded-xl shadow-xl',
+                        title: 'text-2xl font-bold',
+                        icon: 'mt-3',
+                    },
 
                 });
             }

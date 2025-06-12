@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../providers/AuthContext';
 import { useLoaderData } from 'react-router';
@@ -9,7 +9,9 @@ const UpdateMarathon = () => {
     const marathonData = useLoaderData();
 
 
-
+    useEffect(() => {
+        document.title = 'RUN | Update Marathon';
+    }, []);
     const {
         _id,
         title,

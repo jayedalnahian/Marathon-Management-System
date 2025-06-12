@@ -159,20 +159,20 @@ const MyMarathonList = () => {
         catch (error) {
             console.log(error);
             Swal.fire({
-                    title: "Unexpected Error!",
-                    timer: 3000,
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                    background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
-                    color: "#ffffff", // white text
-                    customClass: {
-                        popup: 'rounded-xl shadow-xl',
-                        title: 'text-2xl font-bold',
-                        icon: 'mt-3',
-                    },
-                    icon: "error",
+                title: "Unexpected Error!",
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                background: "linear-gradient(135deg, #7f00ff, #00bfff)", // vibrant purple to blue
+                color: "#ffffff", // white text
+                customClass: {
+                    popup: 'rounded-xl shadow-xl',
+                    title: 'text-2xl font-bold',
+                    icon: 'mt-3',
+                },
+                icon: "error",
 
-                });
+            });
         }
 
 
@@ -219,7 +219,7 @@ const MyMarathonList = () => {
                                     </td>
                                     <td className="p-3">
                                         <p>{marathon.location}</p>
-                                        {/* <p>panchagarh</p> */}
+                                        
                                     </td>
                                     <td className="p-3">
                                         <p>{formattedDate}</p>
@@ -232,16 +232,11 @@ const MyMarathonList = () => {
                                             applicantModal && (
                                                 <div className="fixed inset-0 bg-[#80808080] z-50 flex justify-center items-center">
                                                     <section className="w-11/12 max-w-4xl max-h-screen overflow-y-auto bg-white p-6 text-gray-900 dark:bg-gray-900 dark:text-gray-100 rounded-lg shadow-lg relative">
-                                                        <button
-                                                            className="absolute top-4 right-4 text-white bg-red-500 hover:bg-red-600 px-3 py-1 rounded"
-                                                            onClick={() => setApplicantModal(false)}
-                                                        >
-                                                            ✕
-                                                        </button>
+                                                        <button className="absolute top-4 right-4 text-white bg-red-500 hover:bg-red-600 px-3 py-1 rounded" onClick={() => setApplicantModal(false)}>✕</button>
 
                                                         <h2 className="text-2xl font-bold mb-4">Applicants</h2>
 
-                                                        {marathon.totalRegistrationCount.length === 0 ? (
+                                                        {marathon?.totalRegistrationCount?.length === 0 ? (
                                                             <p className="text-gray-500">No applicants registered yet.</p>
                                                         ) : (
                                                             <div className="space-y-4">
@@ -281,7 +276,7 @@ const MyMarathonList = () => {
                                                             <div className='flex justify-between items-center'>
                                                                 <div></div>
                                                                 <p className='text-2xl font-bold'>Update Marathon</p>
-                                                                <button className='btn text-2xl' onClick={() => setShowModal(false)}>X</button>
+                                                                <button className=" text-white bg-red-500 hover:bg-red-600 px-3 py-1 rounded" onClick={() => setShowModal(false)}>✕</button>
                                                             </div>
                                                             <div className="grid grid-cols-6  gap-4 col-span-full lg:col-span-3">
                                                                 {[

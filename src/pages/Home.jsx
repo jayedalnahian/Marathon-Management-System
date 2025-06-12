@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import HeroSlider from '../components/home/HeroSlider';
 import SixMarathons from '../components/home/SixMarathons';
 import UpcomingMarathons from '../components/home/UpcomingMarathons';
@@ -12,7 +12,10 @@ import { AuthContext } from '../providers/AuthContext';
 
 
 const Home = () => {
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
+    useEffect(() => {
+        document.title = 'RUN | Home';
+    }, []);
 
     return (
         <div>
@@ -27,15 +30,15 @@ const Home = () => {
                         Discover events. Challenge yourself. Be part of something unforgettable.
                     </p>
                     <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                        {!user?<><Link to="/register" className="btn btn-warning btn-lg shadow-xl gap-2">
+                        {!user ? <><Link to="/register" className="btn btn-warning btn-lg shadow-xl gap-2">
                             <FaRunning className="text-xl" /> Register Now
                         </Link><Link to="/login" className="btn btn-warning btn-lg shadow-xl gap-2">
-                            <IoIosLogIn  className="text-xl" /> Log In
-                        </Link></>:<div></div>}
+                                <IoIosLogIn className="text-xl" /> Log In
+                            </Link></> : <div></div>}
                         <Link to="/marathons" className="btn btn-outline btn-lg text-white border-white hover:bg-white hover:text-blue-600 gap-2">
                             <MdEventAvailable className="text-2xl" /> Explore Events
                         </Link>
-                        
+
                     </div>
                 </div>
             </section>

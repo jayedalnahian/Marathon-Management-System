@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FaCalendarAlt, FaFlagCheckered, FaMapMarkerAlt, FaRegCalendarAlt, FaUser } from 'react-icons/fa';
 import { MdOutlineDateRange } from 'react-icons/md';
 import { Link, useLoaderData } from 'react-router';
@@ -11,6 +11,10 @@ import { AuthContext } from '../providers/AuthContext';
 const DetailsPage = () => {
     const marathonData = useLoaderData();
     const { user } = useContext(AuthContext);
+
+    useEffect(() => {
+        document.title = 'RUN | Details';
+    }, []);
 
     const {
         _id,
@@ -30,12 +34,12 @@ const DetailsPage = () => {
     const isRegistered = totalRegistrationCount.some(item => item.email === user?.email);
 
 
-   
-    const today = new Date();
-    const startDate = new Date(startRegistrationDate);
-    const endDate = new Date(endRegistrationDate);
 
-    const isRegistrationOpen = today >= startDate && today <= endDate;
+    // const today = new Date();
+    // const startDate = new Date(startRegistrationDate);
+    // const endDate = new Date(endRegistrationDate);
+
+    const isRegistrationOpen = true; //today >= startDate && today <= endDate;
 
     return (
         <section className="max-w-5xl mx-auto px-4 py-10">
@@ -92,7 +96,7 @@ const DetailsPage = () => {
 
                     <div className='space-x-4'>
                         <Link to={`/marathonRegister/${_id}`} className='btn btn-primary' disabled={isRegistered || !isRegistrationOpen}><VscGitStashApply /></Link>
-                        
+
                     </div>
                 </div>
             </div>

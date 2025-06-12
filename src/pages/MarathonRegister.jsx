@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { useLoaderData } from 'react-router';
+import React, { useContext, useEffect } from 'react';
+import { useLoaderData, useNavigate } from 'react-router';
 import { AuthContext } from '../providers/AuthContext';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -7,6 +7,11 @@ import Swal from 'sweetalert2';
 const MarathonRegister = () => {
     const marathonData = useLoaderData();
     const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+            document.title = 'RUN | Marathon Registration';
+        }, []);
 
     const {
         _id,
@@ -35,6 +40,7 @@ const MarathonRegister = () => {
             });
 
             if (response.data.modifiedCount) {
+                navigate('/dashboard')
                 Swal.fire({
                     title: "Successfully registered for the marathon!",
                     timer: 3000,

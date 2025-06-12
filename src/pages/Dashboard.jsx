@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddMarathon from './AddMarathon';
 import MyMarathonList from './MyMarathonList';
 import MyAppliedMarathons from './MyAppliedMarathons';
@@ -7,6 +7,9 @@ import MyAppliedMarathons from './MyAppliedMarathons';
 
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('list');
+    useEffect(() => {
+        document.title = 'RUN | Dashboard';
+    }, []);
     return (
         <div className='w-10/12 mx-auto'>
             <div className='flex justify-center items-center'>

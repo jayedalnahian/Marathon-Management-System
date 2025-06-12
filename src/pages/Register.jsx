@@ -1,22 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../providers/AuthContext';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
 const Register = () => {
     const { registerUser } = useContext(AuthContext);
+
+    useEffect(() => {
+        document.title = 'RUN | Registration';
+    }, []);
+
+    const navigate = useNavigate()
     const handleRegister = (e) => {
         e.preventDefault();
-        // const name = e.target.name.value;
-        // const email = e.target.email.value;
-        // const photo = e.target.photo.value;
-        // const password = e.target.password?.value;
-        // const userData = {
-        //     name, email, photo, password
-        // }
-        // console.log(userData);
+        
         const name = e?.target?.name?.value;
         const email = e?.target?.email?.value;
         const photo = e?.target?.photo?.value;
@@ -50,6 +49,7 @@ const Register = () => {
                                         },
                                     });
                                     e.target.reset()
+                                    navigate('/')
                                 }
                             })
                     } catch (error) {

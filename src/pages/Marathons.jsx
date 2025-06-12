@@ -9,6 +9,11 @@ const Marathons = () => {
     const [marathons, setMarathons] = useState([])
     const [loading, setLoading] = useState(true);
     useEffect(() => {
+        document.title = 'RUN | Marathons';
+    }, []);
+
+    
+    useEffect(() => {
         const fetchMarathons = () => {
             try {
                 axios.get('http://localhost:3000/marathons')
