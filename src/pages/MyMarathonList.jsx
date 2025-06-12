@@ -13,6 +13,8 @@ const MyMarathonList = () => {
     const [userData, setUserData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
+    const [applicantModal, setApplicantModal] = useState(false);
+
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -189,6 +191,46 @@ const MyMarathonList = () => {
                                     </td>
                                     <td className="p-3 flex flex-col md:flex-row justify-center items-center gap-2 ">
                                         <button className='btn btn-sm btn-active'><Link to={`/details/${marathon._id}`}>Details</Link></button>
+                                        <button onClick={() => setApplicantModal(true)} className='btn btn-sm btn-primary'>Applicants</button>
+                                        {
+                                            applicantModal && (
+                                                <div className="fixed inset-0 bg-[#80808080] z-50 flex justify-center items-center">
+                                                    <section className="w-11/12 max-w-4xl max-h-screen overflow-y-auto bg-white p-6 text-gray-900 dark:bg-gray-900 dark:text-gray-100 rounded-lg shadow-lg relative">
+                                                        <button
+                                                            className="absolute top-4 right-4 text-white bg-red-500 hover:bg-red-600 px-3 py-1 rounded"
+                                                            onClick={() => setApplicantModal(false)}
+                                                        >
+                                                            ✕
+                                                        </button>
+
+                                                        <h2 className="text-2xl font-bold mb-4">Applicants</h2>
+
+                                                        {marathon.totalRegistrationCount.length === 0 ? (
+                                                            <p className="text-gray-500">No applicants registered yet.</p>
+                                                        ) : (
+                                                            <div className="space-y-4">
+                                                                {marathon.totalRegistrationCount.map((reg, index) => (
+                                                                    <div
+                                                                        key={reg.userId}
+                                                                        className="border p-4 rounded-md bg-gray-100 dark:bg-gray-800"
+                                                                    >
+                                                                        <p className="text-lg font-semibold">
+                                                                            {index + 1}. {reg.firstName} {reg.lastName}
+                                                                        </p>
+                                                                        <p><span className="font-medium">Email:</span> {reg.email}</p>
+                                                                        <p><span className="font-medium">Phone:</span> {reg.phone}</p>
+                                                                        <p>
+                                                                            <span className="font-medium">Emergency Contact:</span>{" "}
+                                                                            {reg.emergencyContact}
+                                                                        </p>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                    </section>
+                                                </div>
+
+                                            )}
                                         <button onClick={() => setShowModal(true)} className='btn btn-sm btn-primary' title='Update'>Update</button>
 
                                         {
