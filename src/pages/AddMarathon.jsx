@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../providers/AuthContext';
-import axios from 'axios';
+
 import Swal from 'sweetalert2';
+import useAxiosInterceptor from '../hooks/useAxiosInterceptor';
 
 
 const AddMarathon = () => {
     const { user } = useContext(AuthContext);
+    const axiosInterceptor = useAxiosInterceptor()
 
     const handleAddMarathon = (e) => {
         e.preventDefault();
@@ -39,7 +41,7 @@ const AddMarathon = () => {
 
 
         try {
-            axios.post("http://localhost:3000/marathons", data)
+            axiosInterceptor.post("/marathons", data)
                 .then(data => {
 
                     if (data?.data?.insertedId) {

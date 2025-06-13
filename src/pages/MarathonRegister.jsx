@@ -1,13 +1,15 @@
 import React, { useContext, useEffect } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import { AuthContext } from '../providers/AuthContext';
-import axios from 'axios';
+
 import Swal from 'sweetalert2';
+import useAxiosInterceptor from '../hooks/useAxiosInterceptor';
 
 const MarathonRegister = () => {
     const marathonData = useLoaderData();
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
+    const axiosInterceptor = useAxiosInterceptor()
 
     useEffect(() => {
             document.title = 'RUN | Marathon Registration';
@@ -32,10 +34,9 @@ const MarathonRegister = () => {
 
             if (!priRegistration.includes(_id)) {
                 priRegistration.push(_id);
-                localStorage.setItem("myRegisteredMarathons", JSON.stringify(priRegistration));
             }
 
-            const response = await axios.patch(`http://localhost:3000/marathonApply/${_id}`, {
+            const response = await axiosInterceptor.patch(`/marathonApply/${_id}`, {
                 $addToSet: { totalRegistrationCount: data }
             });
 

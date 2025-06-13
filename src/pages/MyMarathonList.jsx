@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../providers/AuthContext';
 import { GrUpdate } from "react-icons/gr";
-import axios from 'axios';
 import { MdDelete } from "react-icons/md";
 import { Link } from 'react-router';
 import Loading from './Loading';
 import Swal from 'sweetalert2';
+import useAxiosInterceptor from '../hooks/useAxiosInterceptor';
 
 const MyMarathonList = () => {
 
@@ -14,6 +14,7 @@ const MyMarathonList = () => {
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [applicantModal, setApplicantModal] = useState(false);
+    const axiosInterceptor = useAxiosInterceptor()
 
 
     const handleDelete = (id) => {
@@ -27,7 +28,7 @@ const MyMarathonList = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3000/marathon/${id}`)
+                axiosInterceptor.delete(`http:///marathon/${id}`)
                     .then(res => {
                         if (res.data.deletedCount === 1) {
                             // Remove deleted item from UI
@@ -56,7 +57,7 @@ const MyMarathonList = () => {
         if (!user.email) return;
         const fetchData = async () => {
             try {
-                const res = await axios.get(`http://localhost:3000/created-by/${user.email}`);
+                const res = await axiosInterceptor.get(`/created-by/${user.email}`);
 
                 setUserData(res.data);
             } catch (err) {
@@ -129,7 +130,7 @@ const MyMarathonList = () => {
 
 
         try {
-            axios.patch(`http://localhost:3000/marathon/${id}`, data)
+            axiosInterceptor.patch(`/marathon/${id}`, data)
                 .then(res => {
                     console.log(res)
                     Swal.fire({

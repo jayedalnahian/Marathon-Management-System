@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../providers/AuthContext';
 import { useLoaderData } from 'react-router';
-import axios from 'axios';
+import useAxiosInterceptor from '../hooks/useAxiosInterceptor';
 
 const UpdateMarathon = () => {
 
     const marathonData = useLoaderData();
-
+    const axiosInterceptor = useAxiosInterceptor()
 
     useEffect(() => {
         document.title = 'RUN | Update Marathon';
@@ -40,6 +40,7 @@ const UpdateMarathon = () => {
 
 
 
+
         const data = {
             title,
             startRegistrationDate,
@@ -57,7 +58,7 @@ const UpdateMarathon = () => {
 
 
         try {
-            axios.patch(`http://localhost:3000/marathon/${_id}`, data)
+            axiosInterceptor.patch(`http://localhost:3000/marathon/${_id}`, data)
                 .then(res => {
                     console.log(res)
                     Swal.fire({

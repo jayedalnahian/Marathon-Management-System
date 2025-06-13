@@ -12,7 +12,7 @@ import { AuthContext } from '../providers/AuthContext';
 
 
 const Home = () => {
-    const { user } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);   
     useEffect(() => {
         document.title = 'RUN | Home';
     }, []);

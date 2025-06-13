@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import { AuthContext } from '../providers/AuthContext';
 import Loading from './Loading';
 import { Link } from 'react-router';
 import { MdDelete } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import { FaSearch } from 'react-icons/fa';
+import useAxiosInterceptor from '../hooks/useAxiosInterceptor';
 
 const MyAppliedMarathons = () => {
     const [marathons, setMarathons] = useState([]);
@@ -15,13 +15,14 @@ const MyAppliedMarathons = () => {
     const [applicantData, setApplicantData] = useState(null);
     const [searchModal, setSearchModal] = useState(false);
     const [searchResult, setSearchResult] = useState(null);
+    const axiosInterceptor = useAxiosInterceptor()
 
     useEffect(() => {
         if (!user.email) return;
 
         const fetchMarathons = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/my-applied-marathons/${user.email}`);
+                const response = await axiosInterceptor.get(`/my-applied-marathons/${user.email}`);
                 setMarathons(response.data);
             } catch (error) {
                 console.error('Error fetching marathons:', error);
@@ -46,7 +47,7 @@ const MyAppliedMarathons = () => {
         };
 
         fetchMarathons();
-    }, [user.email]);
+    }, [user.email, axiosInterceptor]);
 
     const formatDate = (dateString) => {
         if (!dateString) return "N/A";
@@ -86,7 +87,7 @@ const MyAppliedMarathons = () => {
 
         if (confirm.isConfirmed) {
             try {
-                const res = await axios.patch(`http://localhost:3000/cancel-registration/${marathonId}`, {
+                const res = await axiosInterceptor.patch(`/cancel-registration/${marathonId}`, {
                     userId: user.uid,
                 }, {
                     headers: {
@@ -162,8 +163,8 @@ const MyAppliedMarathons = () => {
         };
 
         try {
-            const response = await axios.patch(
-                `http://localhost:3000/update-registration/${data.marathonId}`,
+            const response = await axiosInterceptor.patch(
+                `/update-registration/${data.marathonId}`,
                 {
                     userId: data.userId,
                     updatedData: updatedData

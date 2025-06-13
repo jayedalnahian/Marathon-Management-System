@@ -5,7 +5,7 @@ import { useState } from "react";
 import { AuthContext } from "./AuthContext";
 
 const AuthProvider = ({ children }) => {
-const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();
 
     const [user, setUser] = useState(null);
 
@@ -30,15 +30,18 @@ const provider = new GoogleAuthProvider();
     }
 
     useEffect(() => {
-        const unSubscribe = onAuthStateChanged(auth, currentUser => {
-            // console.log('current user inside the useEffect', currentUser);
-            setUser(currentUser);
+        const unSubscribe = onAuthStateChanged(auth, async currentUser => {
+            if (currentUser) {
+                const token = await currentUser.getIdToken();
+                setUser({ ...currentUser, accessToken: token });
+            } else {
+                setUser(null);
+            }
             setLoading(false);
-        })
-        return () => {
-            unSubscribe();
-        }
-    }, [])
+        });
+        return () => unSubscribe();
+    }, []);
+
 
 
     const logOut = () => {

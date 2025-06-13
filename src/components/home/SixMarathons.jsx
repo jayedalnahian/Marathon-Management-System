@@ -1,16 +1,14 @@
-
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import MarathonCard from './MarathonCard';
 import Swal from 'sweetalert2';
-import useAxiosInterceptor from '../../hooks/useAxiosInterceptor';
 
 const SixMarathons = () => {
     const [marathons, setMarathons] = useState([])
-    const axiosInterceptor = useAxiosInterceptor()
 
     useEffect(() => {
         try {
-            axiosInterceptor('/marathons-6').then(res => setMarathons(res.data));
+            axios.get('http://localhost:3000/marathons-6').then(res => setMarathons(res.data));
         }
         catch (error) {
             console.log(error)
@@ -31,7 +29,7 @@ const SixMarathons = () => {
                 });
             
         }
-    }, [axiosInterceptor])
+    }, [])
 
 
 
