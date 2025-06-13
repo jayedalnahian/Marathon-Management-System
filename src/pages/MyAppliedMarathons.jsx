@@ -5,13 +5,16 @@ import Loading from './Loading';
 import { Link } from 'react-router';
 import { MdDelete } from 'react-icons/md';
 import Swal from 'sweetalert2';
+import { FaSearch } from 'react-icons/fa';
 
 const MyAppliedMarathons = () => {
     const [marathons, setMarathons] = useState([]);
     const [loading, setLoading] = useState(true);
     const { user } = useContext(AuthContext);
     const [showModal, setShowModal] = useState(false);
-    const [applicantData, setApplicantData] = useState(null)
+    const [applicantData, setApplicantData] = useState(null);
+    const [searchModal, setSearchModal] = useState(false);
+    const [searchResult, setSearchResult] = useState(null);
 
     useEffect(() => {
         if (!user.email) return;
@@ -65,6 +68,7 @@ const MyAppliedMarathons = () => {
 
 
     const handleCancel = async (marathonId) => {
+        const accessToken = user.accessToken;
         const confirm = await Swal.fire({
             title: "Are you sure you want to cancel your registration?",
             text: "This action cannot be undone!",
@@ -84,6 +88,10 @@ const MyAppliedMarathons = () => {
             try {
                 const res = await axios.patch(`http://localhost:3000/cancel-registration/${marathonId}`, {
                     userId: user.uid,
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
                 });
                 console.log(res.data);
                 window.location.reload();
@@ -220,6 +228,25 @@ const MyAppliedMarathons = () => {
     };
 
 
+    const handleSearch = (e) => {
+        e.preventDefault();
+
+        const searchInput = e.target.search.value.trim().toLowerCase();
+        if (!searchInput) return;
+
+        setSearchModal(true);
+
+        const matchedMarathons = marathons.filter((marathon) => {
+            const title = marathon.title?.trim().toLowerCase();
+            return title.includes(searchInput);
+        });
+
+        setSearchResult(matchedMarathons);
+        e.target.reset();
+    };
+
+
+
     const handleData = (dataArray) => {
         setShowModal(true);
         const currentUserEmail = user.email;
@@ -229,8 +256,53 @@ const MyAppliedMarathons = () => {
     }
 
     return (
-        <div className="container p-2 mx-auto sm:p-4 dark:text-gray-800">
-            <div className="overflow-x-auto">
+        <div className=" p-2 mx-auto sm:p-4 dark:text-gray-800 ">
+
+            <div className="overflow-x-auto ">
+                <div className='flex justify-center items-center p-5'>
+                    <form onSubmit={(e) => handleSearch(e)} action="">
+                        <div className="join min-w-2xl">
+                            <input
+                                placeholder='Search By Marathon Title'
+                                type="text"
+                                name="search"
+                                className="w-full p-2 border rounded bg-gray-400"
+                            />
+                            <button type='submit' className="btn btn-error join-item rounded-r-full"><FaSearch />Search</button>
+                            {searchModal && (
+                                <div className="fixed inset-0 bg-[#80808080] z-50 flex justify-center items-center">
+                                    <section className="w-11/12 max-w-4xl max-h-screen overflow-y-auto bg-white p-5 text-gray-900 dark:bg-gray-900 dark:text-gray-100 rounded-lg shadow-lg">
+                                        <div className='flex justify-between items-center'>
+                                            <div></div>
+                                            <div></div>
+                                            <button className="btn btn-error btn-sm rounded text-white" onClick={() => setSearchModal(false)}>✕</button>
+                                        </div>
+
+                                        <div>
+                                            {searchResult.length !== 0 ? searchResult.map(marathon => <div key={marathon._id} >
+                                                <div className=" mt-5 rounded-lg overflow-hidden  bg-gray-950/80 shadow-2xl">
+                                                    <img src={marathon.marathonImageURL} alt={marathon.title} className="w-full h-48 object-cover" />
+                                                    <div className="p-4">
+                                                        <h3 className="font-bold text-xl">{marathon.title}</h3>
+                                                        <p>{marathon.location}</p>
+                                                        <p>Dates: {marathon.startRegistrationDate} to {marathon.endRegistrationDate}</p>
+                                                        <Link
+                                                            to={`/details/${marathon._id}`}
+
+                                                            className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded"
+                                                        >
+                                                            See Details
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </div>) : <p>Sorry we can't find anything.</p>}
+                                        </div>
+                                    </section>
+                                </div>
+                            )}
+                        </div>
+                    </form>
+                </div>
                 <table className="min-w-full text-xs">
                     <colgroup>
                         <col />
@@ -280,7 +352,7 @@ const MyAppliedMarathons = () => {
                                                             <div></div>
                                                             <button className=" text-white bg-red-500 hover:bg-red-600 px-3 py-1 rounded" onClick={() => setShowModal(false)}>✕</button>
                                                         </div>
-                                                        
+
                                                         <div>
                                                             <h1 className="text-xl font-bold mb-6">Update Registration for: {marathon.title}</h1>
 

@@ -16,26 +16,20 @@ const Dashboard = () => {
                 <div role="tablist" className="tabs tabs-lift">
 
 
-                    <button
-                        onClick={() => setActiveTab('add')}
-                        role="tab"
-                        className={`tab text-xl ${activeTab === 'add' ? 'tab-active' : ''}`}
-                    >
-                        Add Marathon
-                    </button>
+                    <button onClick={() => setActiveTab('add')} role="tab" className={`tab text-xl ${activeTab === 'add' ? 'tab-active' : ''}`}>❖ Add Marathon</button>
                     <button
                         onClick={() => setActiveTab('list')}
                         role="tab"
                         className={`tab  text-xl ${activeTab === 'list' ? 'tab-active' : ''}`}
                     >
-                        My Marathon List
+                        ❖ My Marathon List
                     </button>
                     <button
                         onClick={() => setActiveTab('apply')}
                         role="tab"
                         className={`tab  text-xl ${activeTab === 'apply' ? 'tab-active' : ''}`}
                     >
-                        My Applied Marathons
+                        ❖ My Apply List
                     </button>
                 </div>
             </div>

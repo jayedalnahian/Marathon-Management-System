@@ -5,7 +5,7 @@ import { Link, useLoaderData } from 'react-router';
 import { AiFillLike } from "react-icons/ai";
 import { VscGitStashApply } from "react-icons/vsc";
 import { AuthContext } from '../providers/AuthContext';
-
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
 
 const DetailsPage = () => {
@@ -27,7 +27,6 @@ const DetailsPage = () => {
         marathonImageURL,
         description,
         totalRegistrationCount,
-        createdAt,
         createdBy
     } = marathonData;
 
@@ -90,9 +89,34 @@ const DetailsPage = () => {
                         </div>
                     </div>
 
-                    <p className="text-sm text-gray-400 mt-4">
-                        Posted on {new Date(createdAt).toLocaleDateString()}
-                    </p>
+                    <div className="mt-4 text-center">
+                        <h3 className="text-lg font-semibold mb-2 text-blue-600">Marathon is going <br /> to start in</h3>
+                        <CountdownCircleTimer
+                            isPlaying
+                            size={120}
+                            strokeWidth={10}
+                            duration={Math.max(0, Math.floor((new Date(marathonStartDate).getTime() - Date.now()) / 1000))}
+                            colors={["#00b894", "#fdcb6e", "#e17055", "#d63031"]}
+                            colorsTime={[60 * 60 * 24, 60 * 60, 60, 0]}
+                            onComplete={() => ({ shouldRepeat: false })}
+                        >
+                            {({ remainingTime }) => {
+                                if (remainingTime <= 0) return <span className="text-red-500">Started</span>;
+
+                                const days = Math.floor(remainingTime / (60 * 60 * 24));
+                                const hours = Math.floor((remainingTime % (60 * 60 * 24)) / 3600);
+                                const minutes = Math.floor((remainingTime % 3600) / 60);
+                                const seconds = remainingTime % 60;
+
+                                return (
+                                    <div className="text-sm">
+                                        <div className="font-bold text-lg text-black">{days}d {hours}h</div>
+                                        <div className='text-black'>{minutes}m {seconds}s</div>
+                                    </div>
+                                );
+                            }}
+                        </CountdownCircleTimer>
+                    </div>
 
                     <div className='space-x-4'>
                         <Link to={`/marathonRegister/${_id}`} className='btn btn-primary' disabled={isRegistered || !isRegistrationOpen}><VscGitStashApply /></Link>
