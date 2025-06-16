@@ -15,7 +15,7 @@ const Register = () => {
     const navigate = useNavigate()
     const handleRegister = (e) => {
         e.preventDefault();
-        
+
         const name = e?.target?.name?.value;
         const email = e?.target?.email?.value;
         const photo = e?.target?.photo?.value;
@@ -70,9 +70,6 @@ const Register = () => {
                             },
                         });
                     }
-
-
-
                 }
 
             })
