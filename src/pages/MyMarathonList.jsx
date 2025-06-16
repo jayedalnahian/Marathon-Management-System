@@ -28,7 +28,7 @@ const MyMarathonList = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosInterceptor.delete(`http:///marathon/${id}`)
+                axiosInterceptor.delete(`https://b11a11-server-side-jayedalnahian.vercel.app/marathon/${id}`)
                     .then(res => {
                         if (res.data.deletedCount === 1) {
                             // Remove deleted item from UI

@@ -78,7 +78,7 @@ const Navbar = () => {
         </label>
     </>
     return (
-        <header className="p-4 shadow-md bg-base-200 text-base-content">
+        <header className=" shadow-md bg-base-200 text-base-content fixed top-0 left-0 w-full z-50 transition-all duration-300">
             <div className="container flex justify-between items-center mx-auto h-16">
                 {/* Logo */}
                 <Link to="/" className="text-2xl font-bold text-orange-500">RUN</Link>

@@ -9,9 +9,9 @@ import "slick-carousel/slick/slick-theme.css";
 const MainLayout = () => {
     return (
         <div>
-            <div className='mx-auto text-center'>
-                <Navbar></Navbar>
-            </div>
+
+            <Navbar></Navbar>
+
             <div className='min-h-screen mx-auto py-10'>
                 <Outlet></Outlet>
             </div>

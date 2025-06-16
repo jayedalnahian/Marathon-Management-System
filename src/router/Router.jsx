@@ -53,11 +53,11 @@ const router = createBrowserRouter([
             },
             {
                 path: '/details/:id',
-                loader: async ({params})=> {
-                    const res = await axiosInterceptor.get(`/marathon/${params.id}`);
-                    return res.data;
-                },
-                // loader: ({params})=> fetch(`https://b11a11-server-side-jayedalnahian.vercel.app/marathon/${params.id}`),
+                // loader: async ({params})=> {
+                //     const res = await axiosInterceptor.get(`/marathon/${params.id}`);
+                //     return res.data;
+                // },
+                loader: ({params})=> fetch(`https://b11a11-server-side-jayedalnahian.vercel.app/marathon/${params.id}`),
                 hydrateFallbackElement: <Loading></Loading>,
                 element: <PrivateRoute><DetailsPage></DetailsPage></PrivateRoute>
             },
