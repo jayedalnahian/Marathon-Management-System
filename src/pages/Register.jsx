@@ -30,7 +30,7 @@ const Register = () => {
 
 
                     try {
-                        axios.post('http://localhost:3000/users', userData)
+                        axios.post('https://b11a11-server-side-jayedalnahian.vercel.app/users', userData)
                             .then(data => {
                                 if (data?.data?.insertedId) {
                                     Swal.fire({

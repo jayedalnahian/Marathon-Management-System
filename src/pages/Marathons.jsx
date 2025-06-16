@@ -16,7 +16,7 @@ const Marathons = () => {
     useEffect(() => {
         const fetchMarathons = () => {
             try {
-                axios.get('http://localhost:3000/marathons')
+                axios.get('https://b11a11-server-side-jayedalnahian.vercel.app/marathons')
                     .then(res => setMarathons(res.data))
 
             }

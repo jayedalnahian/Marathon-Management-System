@@ -132,7 +132,7 @@ const MyMarathonList = () => {
         try {
             axiosInterceptor.patch(`/marathon/${id}`, data)
                 .then(res => {
-                    console.log(res)
+                    
                     Swal.fire({
                         title: "🎉 Marathon Updated!",
                         text: "Your marathon has been successfully updated.",

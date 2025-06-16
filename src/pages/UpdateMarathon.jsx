@@ -58,9 +58,9 @@ const UpdateMarathon = () => {
 
 
         try {
-            axiosInterceptor.patch(`http://localhost:3000/marathon/${_id}`, data)
+            axiosInterceptor.patch(`https://b11a11-server-side-jayedalnahian.vercel.app/marathon/${_id}`, data)
                 .then(res => {
-                    console.log(res)
+                    
                     Swal.fire({
                         title: "🎉 Marathon Updated!",
                         text: "Your marathon has been successfully updated.",

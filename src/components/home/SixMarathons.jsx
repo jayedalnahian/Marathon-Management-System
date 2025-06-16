@@ -8,7 +8,7 @@ const SixMarathons = () => {
 
     useEffect(() => {
         try {
-            axios.get('http://localhost:3000/marathons-6').then(res => setMarathons(res.data));
+            axios.get('https://b11a11-server-side-jayedalnahian.vercel.app/marathons-6').then(res => setMarathons(res.data));
         }
         catch (error) {
             console.log(error)

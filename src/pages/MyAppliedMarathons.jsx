@@ -94,7 +94,7 @@ const MyAppliedMarathons = () => {
                         Authorization: `Bearer ${accessToken}`
                     }
                 });
-                console.log(res.data);
+                
                 window.location.reload();
 
                 if (res.data.modifiedCount === 1) {

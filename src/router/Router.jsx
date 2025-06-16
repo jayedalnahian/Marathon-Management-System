@@ -52,19 +52,19 @@ const router = createBrowserRouter([
             },
             {
                 path: '/details/:id',
-                loader: ({params})=> fetch(`http://localhost:3000/marathon/${params.id}`),
+                loader: ({params})=> fetch(`https://b11a11-server-side-jayedalnahian.vercel.app/marathon/${params.id}`),
                 hydrateFallbackElement: <Loading></Loading>,
                 element: <PrivateRoute><DetailsPage></DetailsPage></PrivateRoute>
             },
             {
                 path: "/updateMarathon/:id",
-                loader: ({ params }) => fetch(`http://localhost:3000/marathon/${params.id}`),
+                loader: ({ params }) => fetch(`https://b11a11-server-side-jayedalnahian.vercel.app/marathon/${params.id}`),
                 hydrateFallbackElement: <Loading></Loading>,
                 element: <PrivateRoute><UpdateMarathon></UpdateMarathon></PrivateRoute>
             },
             {
                 path: "/marathonRegister/:id",
-                loader: ({ params }) => fetch(`http://localhost:3000/marathon/${params.id}`),
+                loader: ({ params }) => fetch(`https://b11a11-server-side-jayedalnahian.vercel.app/marathon/${params.id}`),
                 hydrateFallbackElement: <Loading></Loading>,
                 element: <PrivateRoute><MarathonRegister></MarathonRegister></PrivateRoute>
             },
