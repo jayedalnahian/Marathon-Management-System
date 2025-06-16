@@ -94,7 +94,7 @@ const MyAppliedMarathons = () => {
                         Authorization: `Bearer ${accessToken}`
                     }
                 });
-                
+
                 window.location.reload();
 
                 if (res.data.modifiedCount === 1) {
@@ -260,16 +260,22 @@ const MyAppliedMarathons = () => {
         <div className=" p-2 mx-auto sm:p-4 dark:text-gray-800 ">
 
             <div className="overflow-x-auto ">
-                <div className='flex justify-center items-center p-5'>
-                    <form onSubmit={(e) => handleSearch(e)} action="">
-                        <div className="join min-w-2xl">
+                <div className="flex justify-center items-center p-4">
+                    <form onSubmit={(e) => handleSearch(e)} className="w-full max-w-2xl">
+                        <div className="flex flex-col sm:flex-row items-center gap-2">
                             <input
-                                placeholder='Search By Marathon Title'
                                 type="text"
                                 name="search"
-                                className="w-full p-2 border rounded bg-gray-400"
+                                placeholder="Search By Marathon Title"
+                                className="flex-grow w-full sm:w-auto p-3 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
-                            <button type='submit' className="btn btn-error join-item rounded-r-full"><FaSearch />Search</button>
+                            <button
+                                type="submit"
+                                className="btn btn-error flex items-center gap-2 px-4 py-2 rounded-md text-white"
+                            >
+                                <FaSearch />
+                                Search
+                            </button>
                             {searchModal && (
                                 <div className="fixed inset-0 bg-[#80808080] z-50 flex justify-center items-center">
                                     <section className="w-11/12 max-w-4xl max-h-screen overflow-y-auto bg-white p-5 text-gray-900 dark:bg-gray-900 dark:text-gray-100 rounded-lg shadow-lg">
@@ -304,6 +310,7 @@ const MyAppliedMarathons = () => {
                         </div>
                     </form>
                 </div>
+
                 <table className="min-w-full text-xs">
                     <colgroup>
                         <col />

@@ -34,11 +34,11 @@ const DetailsPage = () => {
 
 
 
-    // const today = new Date();
-    // const startDate = new Date(startRegistrationDate);
-    // const endDate = new Date(endRegistrationDate);
+    const today = new Date();
+    const startDate = new Date(startRegistrationDate);
+    const endDate = new Date(endRegistrationDate);
 
-    const isRegistrationOpen = true; //today >= startDate && today <= endDate;
+    const isRegistrationOpen = today >= startDate && today <= endDate;
 
     return (
         <section className="max-w-5xl mx-auto px-4 py-10">
