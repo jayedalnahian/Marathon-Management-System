@@ -7,7 +7,7 @@ A full-stack web application for organizing and participating in marathon events
 ## 🔗 Live Project
 
 - 🌐 Client: [b11a11-client-side.web.app](https://b11a11-client-side.web.app/)
-- 🌐 Server: [b11a11-server-side-jayedalnahian.vercel.app](https://b11a11-server-side-jayedalnahian.vercel.app)
+- 🌐 Server: [b11a11-server-side-jayedalnahian.vercel.app](http://localhost:3000)
 
 ---
 

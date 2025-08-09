@@ -1,4 +1,4 @@
-import daisyui from 'daisyui';
+import daisyui from 'daisyui'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -11,4 +11,10 @@ export default {
   },
   darkMode: 'class',
   plugins: [daisyui],
-};
+  daisyui: {
+    themes: [
+      
+      'dark', // Optional: keep dark theme
+    ],
+  },
+}
