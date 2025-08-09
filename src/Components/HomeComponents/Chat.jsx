@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaUserCircle, FaPaperPlane, FaRegComments } from "react-icons/fa";
+import { FaUserCircle, FaRegComments } from "react-icons/fa";
 import { IoMdSend } from "react-icons/io";
 
 const Chat = () => {
@@ -35,11 +35,11 @@ const Chat = () => {
       timer: 3000,
       timerProgressBar: true,
       showConfirmButton: false,
-      background: "#F2EFE7",
-      color: "#006A71",
+      background: "#DCD7C9",
+      color: "#2C3930",
       customClass: {
-        popup: "rounded-xl border-2 border-primary shadow-xl",
-        title: "text-2xl font-bold text-primary",
+        popup: "rounded-xl border-2 border-[#A27B5C] shadow-xl",
+        title: "text-2xl font-bold text-[#2C3930]",
       },
     });
   };
@@ -52,11 +52,11 @@ const Chat = () => {
       timer: 3000,
       timerProgressBar: true,
       showConfirmButton: false,
-      background: "#F2EFE7",
-      color: "#006A71",
+      background: "#DCD7C9",
+      color: "#2C3930",
       customClass: {
-        popup: "rounded-xl border-2 border-primary shadow-xl",
-        title: "text-2xl font-bold text-primary",
+        popup: "rounded-xl border-2 border-[#A27B5C] shadow-xl",
+        title: "text-2xl font-bold text-[#2C3930]",
       },
     });
   };
@@ -93,20 +93,20 @@ const Chat = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto my-16 px-4 sm:px-6">
+    <div className="w-full max-w-7xl mx-auto my-16 px-4 sm:px-6 lg:px-8">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="text-center mb-12"
       >
-        <div className="inline-flex items-center justify-center bg-primary/10 p-3 rounded-full mb-4">
-          <FaRegComments className="text-2xl text-primary" />
+        <div className="inline-flex items-center justify-center bg-[#A27B5C]/10 p-3 rounded-full mb-4">
+          <FaRegComments className="text-2xl text-[#A27B5C]" />
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#2C3930] mb-4">
           Community Feedback
         </h2>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-[#3F4F44]">
           Share your thoughts and read what others are saying
         </p>
       </motion.div>
@@ -116,50 +116,50 @@ const Chat = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="bg-background rounded-xl shadow-lg p-6 mb-12 border border-gray-200"
+        className="bg-[#DCD7C9] rounded-xl shadow-lg p-6 mb-12 border border-[#A27B5C]/30"
       >
         <form onSubmit={handleChat}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-[#2C3930] mb-2">
                 Your Name
               </label>
               <input
                 type="text"
                 name="name"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                className="w-full px-4 py-3 rounded-lg border border-[#3F4F44]/50 focus:ring-2 focus:ring-[#A27B5C] focus:border-[#A27B5C] outline-none transition bg-white"
                 placeholder="John Doe"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-[#2C3930] mb-2">
                 Email Address
               </label>
               <input
                 type="email"
                 name="email"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                className="w-full px-4 py-3 rounded-lg border border-[#3F4F44]/50 focus:ring-2 focus:ring-[#A27B5C] focus:border-[#A27B5C] outline-none transition bg-white"
                 placeholder="john@example.com"
                 required
               />
             </div>
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-[#2C3930] mb-2">
               Your Feedback
             </label>
             <textarea
               name="opinion"
               rows="4"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+              className="w-full px-4 py-3 rounded-lg border border-[#3F4F44]/50 focus:ring-2 focus:ring-[#A27B5C] focus:border-[#A27B5C] outline-none transition bg-white"
               placeholder="What do you think about our platform?"
               required
             ></textarea>
           </div>
           <motion.button
             type="submit"
-            className="w-full md:w-auto flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            className="w-full md:w-auto flex items-center justify-center gap-2 bg-[#A27B5C] hover:bg-[#8a6a4f] text-[#DCD7C9] px-6 py-3 rounded-lg font-medium transition-colors"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             disabled={isSubmitting}
@@ -178,17 +178,17 @@ const Chat = () => {
 
       {/* Comments Section */}
       <div className="space-y-8">
-        <h3 className="text-2xl font-semibold text-primary mb-6">
+        <h3 className="text-2xl font-semibold text-[#2C3930] mb-6">
           Community Comments ({opinions.length})
         </h3>
 
         {isLoading ? (
           <div className="flex justify-center items-center h-40">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#A27B5C]"></div>
           </div>
         ) : opinions.length === 0 ? (
-          <div className="text-center py-12 bg-background/50 rounded-xl">
-            <p className="text-gray-500">No comments yet. Be the first to share your thoughts!</p>
+          <div className="text-center py-12 bg-[#DCD7C9]/50 rounded-xl">
+            <p className="text-[#3F4F44]">No comments yet. Be the first to share your thoughts!</p>
           </div>
         ) : (
           <AnimatePresence>
@@ -198,25 +198,25 @@ const Chat = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-background rounded-xl shadow-md p-6 border border-gray-100"
+                className="bg-[#DCD7C9] rounded-xl shadow-md p-6 border border-[#A27B5C]/20"
               >
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0">
-                    <div className="bg-primary/10 text-primary rounded-full w-12 h-12 flex items-center justify-center">
+                    <div className="bg-[#A27B5C]/10 text-[#A27B5C] rounded-full w-12 h-12 flex items-center justify-center">
                       <FaUserCircle className="text-2xl" />
                     </div>
                   </div>
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-semibold text-gray-900">{opinion.name}</h4>
-                      <span className="text-xs text-gray-500">{opinion.email}</span>
+                      <h4 className="font-semibold text-[#2C3930]">{opinion.name}</h4>
+                      <span className="text-xs text-[#3F4F44]">{opinion.email}</span>
                     </div>
-                    <p className="text-gray-700">{opinion.opinion}</p>
+                    <p className="text-[#3F4F44]">{opinion.opinion}</p>
                     <div className="mt-3 flex items-center gap-4">
-                      <button className="text-sm text-primary hover:text-primary-dark font-medium">
+                      <button className="text-sm text-[#A27B5C] hover:text-[#8a6a4f] font-medium">
                         Reply
                       </button>
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs text-[#3F4F44]/70">
                         {new Date().toLocaleDateString()}
                       </span>
                     </div>

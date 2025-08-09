@@ -23,7 +23,6 @@ const Home = () => {
             
             <HeroSlider user={user}></HeroSlider>
             <SixMarathons></SixMarathons>
-            <UpcomingMarathons></UpcomingMarathons>
             <QnA></QnA>
             <Chat></Chat>
         </div>
