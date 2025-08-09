@@ -6,6 +6,10 @@
     font-weight: 700;
 }
 
+body {
+  background-color: #DCD7C9;
+  color: #2C3930;
+}
 
 .backgroundIMG1 {
     background: url('https://i.ibb.co/6Rqvh1RV/marathon-image-3.webp');
