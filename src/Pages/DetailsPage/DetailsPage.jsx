@@ -1,238 +1,193 @@
-import React, { useContext, useEffect } from 'react';
-import { 
-  FaCalendarAlt, 
-  FaFlagCheckered, 
-  FaMapMarkerAlt, 
-  FaRegCalendarAlt, 
-  FaUser,
-  FaRunning
-} from 'react-icons/fa';
-import { Link, useLoaderData } from 'react-router';
-import { AiFillLike } from "react-icons/ai";
-import { VscGitStashApply } from "react-icons/vsc";
-import { motion } from 'framer-motion';
-import { CountdownCircleTimer } from 'react-countdown-circle-timer';
-import { AuthContext } from '../../AuthProvider/AuthContext';
+import React from "react";
+import { Link, useParams } from "react-router";
+import {
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+  FaRunning,
+  FaUsers,
+  FaPhone,
+  FaUserShield,
+} from "react-icons/fa";
+import { motion } from "framer-motion";
+import useGetMarathonDetails from "../../CustomHooks/useGetMarathonDetails";
+import { format } from "date-fns";
 
 const DetailsPage = () => {
-    const marathonData = useLoaderData();
-    const { user } = useContext(AuthContext);
+  const { id } = useParams();
+  const { data: marathon } = useGetMarathonDetails(id);
 
-    useEffect(() => {
-        document.title = `${marathonData.title} | RUN`;
-    }, [marathonData.title]);
-
-    const {
-        _id,
-        title,
-        startRegistrationDate,
-        endRegistrationDate,
-        marathonStartDate,
-        location,
-        runningDistance,
-        marathonImageURL,
-        description,
-        totalRegistrationCount,
-        createdBy
-    } = marathonData;
-
-    const isRegistered = totalRegistrationCount?.some(item => item.email === user?.email);
-    const today = new Date();
-    const startDate = new Date(startRegistrationDate);
-    const endDate = new Date(endRegistrationDate);
-    const isRegistrationOpen = today >= startDate && today <= endDate;
-
-    // Format date to be more readable
-    const formatDate = (dateString) => {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return new Date(dateString).toLocaleDateString('en-US', options);
-    };
-
-    // Animation variants
-    const container = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
-        }
-    };
-
-    const item = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-            transition: {
-                ease: "easeOut",
-                duration: 0.6
-            }
-        }
-    };
-
+  if (!marathon) {
     return (
-        <motion.section 
-            className="max-w-6xl mx-auto px-4 py-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-        >
-            <motion.div 
-                className="bg-white rounded-xl shadow-2xl overflow-hidden md:flex border border-gray-200"
-                variants={container}
-                initial="hidden"
-                animate="visible"
-            >
-                {/* Image Section */}
-                <motion.div 
-                    className="md:w-1/2 h-80 md:h-auto relative"
-                    variants={item}
-                >
-                    <img
-                        src={marathonImageURL}
-                        alt={title}
-                        className="object-cover w-full h-full"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                    
-                    {/* Status Badge */}
-                    <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
-                        {isRegistrationOpen ? 'Registration Open' : 'Registration Closed'}
-                    </div>
-                </motion.div>
-
-                {/* Content Section */}
-                <motion.div 
-                    className="md:w-1/2 p-8 space-y-6"
-                    variants={item}
-                >
-                    <motion.div variants={item}>
-                        <h2 className="text-3xl font-bold text-primary mb-2">{title}</h2>
-                        <p className="text-gray-600">{description}</p>
-                    </motion.div>
-
-                    <motion.div 
-                        className="grid grid-cols-1 gap-4 text-sm"
-                        variants={container}
-                    >
-                        <motion.div className="flex items-center gap-3" variants={item}>
-                            <FaMapMarkerAlt className="text-xl text-secondary" />
-                            <span className="text-gray-700">{location}</span>
-                        </motion.div>
-
-                        <motion.div className="flex items-center gap-3" variants={item}>
-                            <FaCalendarAlt className="text-xl text-secondary" />
-                            <span className="text-gray-700">
-                                Registration: {formatDate(startRegistrationDate)} → {formatDate(endRegistrationDate)}
-                            </span>
-                        </motion.div>
-
-                        <motion.div className="flex items-center gap-3" variants={item}>
-                            <FaRegCalendarAlt className="text-xl text-secondary" />
-                            <span className="text-gray-700">Marathon Date: {formatDate(marathonStartDate)}</span>
-                        </motion.div>
-
-                        <motion.div className="flex items-center gap-3" variants={item}>
-                            <FaFlagCheckered className="text-xl text-secondary" />
-                            <span className="text-gray-700">Distance: {runningDistance}</span>
-                        </motion.div>
-
-                        <motion.div className="flex items-center gap-3" variants={item}>
-                            <FaUser className="text-xl text-secondary" />
-                            <span className="text-gray-700">Organizer: {createdBy}</span>
-                        </motion.div>
-
-                        <motion.div className="flex items-center gap-3" variants={item}>
-                            <FaRunning className="text-xl text-secondary" />
-                            <span className="text-gray-700">
-                                Participants: {Array.isArray(totalRegistrationCount) ? totalRegistrationCount.length : totalRegistrationCount}
-                            </span>
-                        </motion.div>
-                    </motion.div>
-
-                    {/* Countdown Timer */}
-                    <motion.div 
-                        className="mt-6 text-center"
-                        variants={item}
-                    >
-                        <h3 className="text-xl font-semibold mb-4 text-primary">
-                            Marathon starts in
-                        </h3>
-                        <div className="flex justify-center">
-                            <CountdownCircleTimer
-                                isPlaying
-                                size={140}
-                                strokeWidth={10}
-                                duration={Math.max(0, Math.floor((new Date(marathonStartDate).getTime() - Date.now()) / 1000))}
-                                colors={["#48A6A7", "#3D8E8F", "#006A71", "#00474B"]}
-                                colorsTime={[60 * 60 * 24 * 7, 60 * 60 * 24, 60 * 60, 0]}
-                                onComplete={() => ({ shouldRepeat: false })}
-                            >
-                                {({ remainingTime }) => {
-                                    if (remainingTime <= 0) return (
-                                        <div className="text-red-500 font-medium">Event Started</div>
-                                    );
-
-                                    const days = Math.floor(remainingTime / (60 * 60 * 24));
-                                    const hours = Math.floor((remainingTime % (60 * 60 * 24)) / 3600);
-                                    const minutes = Math.floor((remainingTime % 3600) / 60);
-                                    const seconds = remainingTime % 60;
-
-                                    return (
-                                        <div className="space-y-1">
-                                            <div className="font-bold text-2xl text-primary">
-                                                {days}d {hours}h
-                                            </div>
-                                            <div className='text-gray-600'>
-                                                {minutes}m {seconds}s
-                                            </div>
-                                        </div>
-                                    );
-                                }}
-                            </CountdownCircleTimer>
-                        </div>
-                    </motion.div>
-
-                    {/* Action Buttons */}
-                    <motion.div 
-                        className="flex flex-col sm:flex-row gap-4 mt-8"
-                        variants={item}
-                    >
-                        <motion.div 
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.97 }}
-                        >
-                            <Link 
-                                to={`/marathonRegister/${_id}`} 
-                                className={`flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
-                                    isRegistered 
-                                        ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
-                                        : !isRegistrationOpen
-                                        ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
-                                        : 'bg-primary hover:bg-primary-dark text-white'
-                                }`}
-                                disabled={isRegistered || !isRegistrationOpen}
-                            >
-                                <VscGitStashApply className="text-xl" />
-                                {isRegistered ? 'Already Registered' : 'Register Now'}
-                            </Link>
-                        </motion.div>
-
-                        <motion.div 
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.97 }}
-                        >
-                            <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium border-2 border-primary text-primary hover:bg-primary/10 transition-colors">
-                                <AiFillLike className="text-xl" />
-                                Like Event
-                            </button>
-                        </motion.div>
-                    </motion.div>
-                </motion.div>
-            </motion.div>
-        </motion.section>
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#A27B5C]"></div>
+      </div>
     );
+  }
+
+  // Format dates
+  const formatDate = (dateString) => {
+    return format(new Date(dateString), "MMMM d, yyyy");
+  };
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* Marathon Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="mb-12"
+      >
+        <h1 className="text-4xl font-bold text-[#2C3930] mb-4">
+          {marathon.title}
+        </h1>
+
+        <div className="flex flex-wrap gap-6 mb-6">
+          <div className="flex items-center text-[#3F4F44]">
+            <FaCalendarAlt className="mr-2 text-[#A27B5C]" />
+            <span>{formatDate(marathon.marathonStartDate)}</span>
+          </div>
+          <div className="flex items-center text-[#3F4F44]">
+            <FaMapMarkerAlt className="mr-2 text-[#A27B5C]" />
+            <span>{marathon.location}</span>
+          </div>
+          <div className="flex items-center text-[#3F4F44]">
+            <FaRunning className="mr-2 text-[#A27B5C]" />
+            <span>{marathon.runningDistance}</span>
+          </div>
+        </div>
+
+        <div className="bg-[#DCD7C9] rounded-xl overflow-hidden shadow-md">
+          <img
+            src={marathon.marathonImageURL}
+            alt={marathon.title}
+            className="w-full h-96 object-cover"
+            onError={(e) => {
+              e.target.src =
+                "https://via.placeholder.com/800x400?text=Marathon+Image";
+            }}
+          />
+        </div>
+      </motion.div>
+
+      {/* Registration Info */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="bg-[#3F4F44] text-[#DCD7C9] rounded-xl p-6 mb-12"
+      >
+        <h2 className="text-2xl font-bold mb-4">Registration Information</h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-lg font-semibold mb-2 flex items-center">
+              <FaCalendarAlt className="mr-2 text-[#A27B5C]" />
+              Registration Period
+            </h3>
+            <p>
+              {formatDate(marathon.startRegistrationDate)} -{" "}
+              {formatDate(marathon.endRegistrationDate)}
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-2 flex items-center">
+              <FaUsers className="mr-2 text-[#A27B5C]" />
+              Current Registrations
+            </h3>
+            <p>{marathon.totalRegistrationCount?.length || 0} participants</p>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <Link to={`/marathonRegister/${id}`}>
+            <button className="bg-[#A27B5C] hover:bg-[#8a6a4f] text-white px-6 py-3 rounded-lg font-medium transition-colors">
+              Register Now
+            </button>
+          </Link>
+        </div>
+      </motion.div>
+
+      {/* Description */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="mb-12"
+      >
+        <h2 className="text-2xl font-bold text-[#2C3930] mb-4">
+          About The Event
+        </h2>
+        <div className="prose max-w-none text-[#3F4F44]">
+          {marathon.description !== "No description" ? (
+            <p>{marathon.description}</p>
+          ) : (
+            <p className="italic">No description available for this event.</p>
+          )}
+        </div>
+      </motion.div>
+
+      {/* Registered Participants */}
+      {marathon.totalRegistrationCount?.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mb-12"
+        >
+          <h2 className="text-2xl font-bold text-[#2C3930] mb-4">
+            Registered Participants
+          </h2>
+
+          <div className="bg-white rounded-xl shadow-md overflow-hidden">
+            <div className="grid grid-cols-12 bg-[#3F4F44] text-[#DCD7C9] p-4 font-medium">
+              <div className="col-span-4 md:col-span-3">Name</div>
+              <div className="col-span-4 md:col-span-3">Email</div>
+              <div className="col-span-4 md:col-span-3">Phone</div>
+              <div className="col-span-12 md:col-span-3">Emergency Contact</div>
+            </div>
+
+            {marathon.totalRegistrationCount.map((participant, index) => (
+              <div
+                key={index}
+                className="grid grid-cols-12 items-center p-4 border-b border-[#DCD7C9] last:border-0"
+              >
+                <div className="col-span-4 md:col-span-3 font-medium">
+                  {participant.firstName} {participant.lastName}
+                </div>
+                <div className="col-span-4 md:col-span-3 text-sm truncate">
+                  {participant.email}
+                </div>
+                <div className="col-span-4 md:col-span-3 text-sm">
+                  {participant.phone}
+                </div>
+                <div className="col-span-12 md:col-span-3 text-sm mt-2 md:mt-0">
+                  <div className="flex items-center">
+                    <FaUserShield className="text-[#A27B5C] mr-2" />
+                    {participant.emergencyContact}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+      {/* Event Created Info */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.8 }}
+        className="text-sm text-[#3F4F44] italic"
+      >
+        <p>
+          Event created by {marathon.createdBy} on{" "}
+          {formatDate(marathon.createdAt)}
+        </p>
+      </motion.div>
+    </div>
+  );
 };
 
 export default DetailsPage;

@@ -48,7 +48,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-primary-dark text-background">
+    <footer className="bg-[#2C3930] text-[#DCD7C9]">
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {/* Branding Column */}
         <motion.div 
@@ -59,10 +59,10 @@ const Footer = () => {
           className="space-y-4"
         >
           <Link to="/" className="flex items-center gap-2">
-            <FaRunning className="text-3xl text-accent" />
+            <FaRunning className="text-3xl text-[#A27B5C]" />
             <span className="text-2xl font-bold">RUN</span>
           </Link>
-          <p className="text-background/80">
+          <p className="text-[#DCD7C9]/80">
             Empowering runners to achieve their goals through world-class events and community support.
           </p>
           <div className="flex gap-4">
@@ -71,7 +71,7 @@ const Footer = () => {
                 key={index}
                 href={social.href}
                 title={social.title}
-                className="text-background hover:text-accent text-xl transition-colors"
+                className="text-[#DCD7C9] hover:text-[#A27B5C] text-xl transition-colors"
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -100,7 +100,7 @@ const Footer = () => {
                 >
                   <Link 
                     to={link.path} 
-                    className="text-background/80 hover:text-accent transition-colors"
+                    className="text-[#DCD7C9]/80 hover:text-[#A27B5C] transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -122,8 +122,8 @@ const Footer = () => {
           <ul className="space-y-3">
             {contactInfo.map((info, index) => (
               <li key={index} className="flex items-start gap-3">
-                <span className="text-accent mt-0.5">{info.icon}</span>
-                <span className="text-background/80">{info.text}</span>
+                <span className="text-[#A27B5C] mt-0.5">{info.icon}</span>
+                <span className="text-[#DCD7C9]/80">{info.text}</span>
               </li>
             ))}
           </ul>
@@ -131,7 +131,7 @@ const Footer = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-accent hover:bg-accent-dark text-white px-6 py-2 rounded-lg font-medium transition-colors"
+              className="bg-[#A27B5C] hover:bg-[#8a6a4f] text-[#DCD7C9] px-6 py-2 rounded-lg font-medium transition-colors"
             >
               Get In Touch
             </motion.button>
@@ -145,9 +145,9 @@ const Footer = () => {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        className="border-t border-primary/30 py-6"
+        className="border-t border-[#3F4F44] py-6"
       >
-        <div className="max-w-7xl mx-auto px-6 text-center text-background/60 text-sm">
+        <div className="max-w-7xl mx-auto px-6 text-center text-[#DCD7C9]/60 text-sm">
           &copy; {new Date().getFullYear()} RUN. All rights reserved. | Designed with ❤️ for runners
         </div>
       </motion.div>

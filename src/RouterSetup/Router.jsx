@@ -16,6 +16,7 @@ import Loading from "../Components/LoadingComponents/Loading";
 import AddMarathon from "../Pages/DashBoard/AddMarathon/AddMarathon";
 import MyMarathons from "../Pages/DashBoard/MyMarathons/MyMarathons";
 import AppliedMarathons from "../Pages/DashBoard/AppliedMarathons/AppliedMarathons";
+import AboutPage from "../Pages/AboutPage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login></Login>,
+      },
+      {
+        path: "/about",
+        element: <AboutPage></AboutPage>
       },
       {
         path: "/register",
@@ -70,14 +75,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "/profile",
-        element: (
-          <PrivateRoute>
-            <Profile></Profile>
-          </PrivateRoute>
-        ),
-      },
+      
       {
         path: "/description",
         element: (
@@ -87,19 +85,9 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/details/:id",
-        // loader: async ({params})=> {
-        //     const res = await axiosInterceptor.get(`/marathon/${params.id}`);
-        //     return res.data;
-        // },
-        loader: ({ params }) =>
-          fetch(`http://localhost:3000/marathon/${params.id}`),
-        hydrateFallbackElement: <Loading></Loading>,
-        element: (
-          <PrivateRoute>
-            <DetailsPage></DetailsPage>
-          </PrivateRoute>
-        ),
+        path: "/marathons/:id",
+        element:<PrivateRoute><DetailsPage></DetailsPage></PrivateRoute>
+       ,
       },
       {
         path: "/updateMarathon/:id",

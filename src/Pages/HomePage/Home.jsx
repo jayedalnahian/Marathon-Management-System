@@ -9,6 +9,12 @@ import { MdEventAvailable } from "react-icons/md";
 import { IoIosLogIn } from "react-icons/io";
 import { Link } from 'react-router';
 import { AuthContext } from '../../AuthProvider/AuthContext';
+import TrainingTips from '../../Components/HomeComponents/TrainingTips';
+import MediaGallery from '../../Components/HomeComponents/MediaGallery';
+import RunnerAchievements from '../../Components/HomeComponents/RunnerAchievements';
+import SponsorShowcase from '../../Components/HomeComponents/SponsorShowcase';
+import VolunteerTeam from '../../Components/HomeComponents/VolunteerTeam';
+
 
 
 
@@ -21,8 +27,13 @@ const Home = () => {
     return (
         <div>
             
-            <HeroSlider user={user}></HeroSlider>
+            <HeroSlider user={user}></HeroSlider>    
             <SixMarathons></SixMarathons>
+            <TrainingTips></TrainingTips>
+            <MediaGallery></MediaGallery>
+            <VolunteerTeam></VolunteerTeam>
+            <RunnerAchievements></RunnerAchievements>
+            <SponsorShowcase></SponsorShowcase>
             <QnA></QnA>
             <Chat></Chat>
         </div>
